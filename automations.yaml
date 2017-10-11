@@ -102,9 +102,8 @@
     to: 'home'
   action:
   - service: notify.chrome_notifier
-    data_template:
-      message: "Najla chegou em casa"
     data:
+      message: "Najla chegou em casa"
       data:
         tag: notification-about-home-presence
 - id: "push_notif_alexandre_em_casa"
