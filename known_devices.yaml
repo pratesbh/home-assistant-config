@@ -1,0 +1,143 @@
+
+camera_hd:
+  hide_if_away: false
+  icon:
+  mac: 48:02:2A:B0:01:CE
+  name: Camera HD
+  picture:
+  track: true
+  vendor: B-Link Electronic Limited
+
+camera_gabi:
+  hide_if_away: false
+  icon:
+  mac: 7C:DD:90:42:4F:B7
+  name: Camera Gabi
+  picture:
+  track: true
+  vendor: Shenzhen Ogemray Technology Co., Ltd.
+
+camera_garagem:
+  hide_if_away: false
+  icon:
+  mac: 48:02:2A:41:B0:22
+  name: Camera Garagem
+  picture:
+  track: true
+  vendor: B-Link Electronic Limited
+
+modem_net:
+  hide_if_away: false
+  icon:
+  mac: 4C:D0:8A:6E:B0:8C
+  name: Modem NET
+  picture:
+  track: false
+  vendor: HUMAX Co., Ltd.
+
+orange_pi_wifi:
+  hide_if_away: false
+  icon:
+  mac: DC:44:6D:10:37:05
+  name: Orange Pi WiFi
+  picture:
+  track: false
+  vendor: Allwinner Technology Co., Ltd
+
+najla:
+  hide_if_away: false
+  icon:
+  mac: D4:63:C6:D6:69:C7
+  name: Najla
+  picture: /local/images/najla.jpg
+  track: true
+  vendor: Motorola Mobility LLC, a Lenovo Company
+
+chromecast:
+  hide_if_away: false
+  icon: mdi:cast
+  mac: 6C:AD:F8:61:02:51
+  name: Chromecast
+  picture:
+  track: true
+  vendor: AzureWave Technology Inc.
+
+homeassistant_prates:
+  hide_if_away: false
+  icon:
+  name: Alexandre
+  picture: /local/images/alexandre.jpg
+  track: true
+  vendor: Motorola Mobility LLC, a Lenovo Company
+
+dani:
+  hide_if_away: false
+  icon:
+  mac: 04:4B:ED:07:46:08
+  name: Dani
+  picture: /local/images/dani.jpg
+  track: true
+  vendor: Apple, Inc.
+
+ps3:
+  hide_if_away: false
+  icon:
+  mac: 00:24:8D:43:4A:61
+  name: PS3
+  picture:
+  track: true
+  vendor: Sony Interactive Entertainment Inc.
+
+danielle:
+  hide_if_away: false
+  icon:
+  mac: 70:4D:7B:CB:41:73
+  name: Danielle
+  picture:
+  track: true
+  vendor: ASUSTek COMPUTER INC.
+
+asus_pc:
+  hide_if_away: false
+  icon:
+  mac: 38:2C:4A:E6:89:62
+  name: Asus PC
+  picture:
+  track: true
+  vendor: ASUSTek COMPUTER INC.
+
+luana:
+  hide_if_away: false
+  icon:
+  mac: 1C:91:48:32:2E:B2
+  name: Luana
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+pedro:
+  hide_if_away: false
+  icon:
+  mac: F8:CF:C5:4A:2F:05
+  name: Pedro
+  picture:
+  track: true
+  vendor: Motorola Mobility LLC, a Lenovo Company
+
+impressora:
+  hide_if_away: false
+  icon:
+  mac: 34:64:A9:89:FC:20
+  name: Impressora
+  picture:
+  track: true
+  vendor: Hewlett Packard
+
+88797ed8c2a6:
+  hide_if_away: false
+  icon:
+  mac: 88:79:7E:D8:C2:A6
+  name: Alexandre nmap
+  picture:
+  track: true
+  vendor: Motorola Mobility LLC, a Lenovo Company

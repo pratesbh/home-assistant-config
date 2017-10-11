@@ -1,0 +1,53 @@
+acionar_garagem:
+  alias: Acionar Garagem
+  sequence:
+  - data:
+      entity_id: switch.portao_garagem
+    service: switch.turn_on
+  - delay:
+      milliseconds: 100
+  - data:
+      entity_id: switch.portao_garagem
+    service: switch.turn_off
+narrar_status_casa:
+  alias: Narrar status da casa
+  sequence:
+  - data_template:
+      entity_id: media_player.orange_pi
+      message: >
+        Leitura dos sensores:
+        {% for state in states.sensor -%}
+          {%- if loop.first %} O {% elif loop.last %} e o {% else %}, o {% endif -%}
+          {{ state.name | lower }} é {{state.state_with_unit}}
+        {%- endfor -%}.
+    service: tts.google_say
+radio_start:
+  alias: Tocar Radio FM
+  sequence:
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.orange_pi
+        volume_level: '0.5'
+    -  service: media_player.play_media
+       data_template:
+         entity_id: >
+          {% if is_state("input_select.chromecast_radio", "OrangePi") %} media_player.orange_pi
+          {% elif is_state("input_select.chromecast_radio", "Chromecast") %} media_player.prates
+          {% endif %}
+         media_content_id: >
+          {% if is_state("input_select.radio_station", "Coca-Cola FM") %} http://ic.imusicaradios.com.br:8000/brasil.stream.http
+          {% elif is_state("input_select.radio_station", "Classic FM") %} http://19143.live.streamtheworld.com/CLASSICFM_SC
+          {% elif is_state("input_select.radio_station", "Calm Radio - Sleep") %} http://streams.calmradio.com/api/39/128/stream
+          {% elif is_state("input_select.radio_station", "Villa Mix") %} http://centova16.ciclanohost.com.br:9627
+          {% elif is_state("input_select.radio_station", "Itatiaia") %} http://icecast.mobradio.com.br:8000/web.mp3
+          {% elif is_state("input_select.radio_station", "Bossa Jazz Brasil") %} http://209.126.127.123:8020/live
+          {% elif is_state("input_select.radio_station", "Kiss FM") %} http://stm50.sateg.com.br:26840/
+          {% elif is_state("input_select.radio_station", "Jovem Pan") %} http://streaming.mobradio.com.br:8001/web.mp3
+          {% elif is_state("input_select.radio_station", "CDL FM") %} http://stream.izap.com.br:443/1029fm
+          {% elif is_state("input_select.radio_station", "98 FM") %} http://stream.izap.com.br:443/98fm
+          {% elif is_state("input_select.radio_station", "Alvorada") %} http://str01.streaming.mob.radio.br:8002/web.aac
+          {% elif is_state("input_select.radio_station", "89 A Radio Rock") %} http://streaming.shoutcast.com/89FMARADIOROCK?lang=pt-BR%2cpt%3bq%3d0.8%2cen-US%3bq%3d0.6%2cen%3bq%3d0.4 
+          {% elif is_state("input_select.radio_station", "Jovem Pan Pagode") %} http://6d9a.webradio.upx.net.br:9061/stream
+          {% elif is_state("input_select.radio_station", "Desligar") %} vlc://quit()
+          {% endif %}
+         media_content_type: 'music'

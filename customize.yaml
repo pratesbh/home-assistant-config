@@ -1,0 +1,55 @@
+sensor.yr_humidity:
+  friendly_name: Umidade
+sensor.yr_temperature:
+  friendly_name: Temperatura
+sensor.bateria_alexandre:
+  icon: mdi:cellphone
+sensor.unitec_semicondutores:
+  icon: mdi:car
+sensor.alexandre__casa:
+  icon: mdi:home-map-marker
+sensor.hospital_militar:
+  icon: mdi:bus
+switch.portao_garagem:
+  hidden: true
+script.acionar_garagem:
+  icon: mdi:garage
+  can_cancel: false
+switch.deteccao_movimento_garagem:
+  icon: mdi:eye-off
+device_tracker.chromecast:
+  icon: mdi:cast
+  hidden: true
+media_player.prates:
+  friendly_name: Chromecast
+device_tracker.camera_hd:
+  icon: mdi:cctv
+device_tracker.camera_garagem:
+  icon: mdi:cctv
+device_tracker.camera_gabi:
+  icon: mdi:cctv
+device_tracker.asus_pc:
+  icon: mdi:laptop
+device_tracker.ps3:
+  icon: mdi:playstation
+device_tracker.impressora:
+  icon: mdi:printer
+sun.sun:
+  hidden: true
+script.radio_start:
+  hidden: true
+switch.deteccao_movimento_quarto_gabi:
+  icon: mdi:eye-off
+sensor.since_last_boot_templated:
+  friendly_name: Uptime
+  icon: mdi:clock
+sensor.alexandre:
+  entity_picture: /local/images/alexandre.jpg
+sensor.since_last_boot:
+  hidden: 'true'
+automation.ir__inicia_a_radio:
+  hidden: 'true'
+automation.ir__aciona_a_garagem:
+  hidden: 'true'
+automation.ir__para_a_radio:
+  hidden: 'true'

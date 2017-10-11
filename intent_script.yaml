@@ -1,0 +1,119 @@
+TemperaturaIntent:
+  speech:
+    text: A temperatura em casa é {{ states('sensor.yr_temperature') | round(0) }} graus
+LocalizarIntent:
+  speech:
+    text: >
+      {%- for state in states.device_tracker -%}
+        {%- if state.name.lower() == User.lower() -%}
+          {{ state.name }} está em {{ state.state }}
+        {%- elif loop.last -%}
+          Desculpe, não sei aonde {{ User }} se encontra.
+        {%- endif -%}
+      {%- else -%}
+        Desculpe, não tenho rastreadores ativos.
+      {%- endfor -%}
+OndeEstaoIntent:
+  speech:
+    text: >
+      {%- if is_state('device_tracker.homeassistant_prates', 'home') and
+             is_state('device_tracker.d463c6d669c7', 'home') -%}
+        Todo mundo está em casa, ora bolas.
+      {%- else -%}
+        Alexandre está em {{ states("device_tracker.homeassistant_prates") }}
+        e Najla está em {{ states("device_tracker.d463c6d669c7") }}
+      {% endif %}
+AlarmeIntent:
+  speech:
+    text: Vou {{ OnOff }} o alarme em {{ Room }}
+  action:
+    - service: persistent_notification.create
+      data_template:
+        message: Alguém solicitou {{ OnOff }} o alarme em {{ Room }}
+    - service_template: >
+        {%- if OnOff == "ativar" -%}
+          switch.turn_on
+        {%- else -%}
+          switch.turn_off
+        {%- endif -%}
+      data_template:
+        entity_id: "switch.deteccao_movimento_{{ Room | replace(' ', '_') }}"
+GaragemIntent:
+  speech:
+    text: Acionando a garagem. Certifique-se que não há obstáculos no caminho do portão, como a Gabriela ou o Jeep Compass.
+  action:
+    - service: persistent_notification.create
+      data_template:
+        message: Portão da garagem acionado pelo Google Assistant.
+    - service: script.acionar_garagem
+Temperature:
+  speech:
+    text: Temperature at home is {{ states('sensor.yr_temperature') | round(0) }} degrees
+LocateIntent:
+  speech:
+    text: >
+      {%- for state in states.device_tracker -%}
+        {%- if state.name.lower() == User.lower() -%}
+          {{ state.name }} is at {{ state.state }}
+        {%- elif loop.last -%}
+          Sorry, I don't know {{ User }} location.
+        {%- endif -%}
+      {%- else -%}
+        Sorry, there is no active trackers..
+      {%- endfor -%}
+WhereAreWeIntent:
+  speech:
+    text: >
+      {%- if is_state('device_tracker.homeassistant_prates', 'home') and
+             is_state('device_tracker.d463c6d669c7', 'home') -%}
+        Everybody is at home, you fool
+      {%- else -%}
+        Alexandre is at {{ states("sensor.alexandre") }}
+        and Najla is at {{ states("device_tracker.d463c6d669c7") }}
+      {% endif %}
+TurnAlarm:
+  speech:
+    text: I will turn {{ OnOff }} the motion detection alarm of {{ Room }}
+  action:
+    - service: persistent_notification.create
+      data_template:
+        message: Alguém solicitou {{ OnOff }} o alarme em {{ Room }}
+    - service_template: >
+        {%- if OnOff == "on" -%}
+          switch.turn_on
+        {%- else -%}
+          switch.turn_off
+        {%- endif -%}
+      data_template:
+        entity_id: "switch.deteccao_movimento_{{ Room | replace(' ', '_') }}"
+ActivateGarageDoor:
+  speech:
+    text: Activating the garage door. Please make sure that Gabriela or the Jeep Compass won't be smashed by the gate.
+  action:
+    - service: persistent_notification.create
+      data_template:
+        message: Portão da garagem acionado pelo Google Assistant.
+    - service: script.acionar_garagem
+ListenToRadio:
+  speech:
+    text: >
+      {%- if OnOff == "on" -%}
+        You are listening to {{ RadioStation }}
+      {%- else -%}
+         Turning off the radio
+      {%- endif -%}
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.chromecast_radio
+        option: OrangePi
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.radio_station
+        option: >
+          {%- if OnOff == "on" -%}
+            {{ RadioStation }}
+          {%- else -%}
+            Desligado
+          {%- endif -%}
+    - service: script.radio_start

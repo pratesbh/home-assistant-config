@@ -1,0 +1,84 @@
+# Grupos
+transito:
+  name: Trânsito
+  entities:
+    - sensor.unitec_semicondutores
+    - sensor.alexandre__casa
+    - sensor.hospital_militar
+    - binary_sensor.alexandre_dirigindo
+segundo_andar:
+  name: Segundo Andar
+  entities:
+    - switch.deteccao_movimento_quarto_gabi
+    - binary_sensor.sensor_de_movimento_quarto_gabi
+    - camera.quarto_gabi
+garagem:
+  name: Garagem
+  control: hidden
+  entities:
+    - switch.deteccao_movimento_garagem
+    - binary_sensor.sensor_de_movimento_garagem
+    - script.acionar_garagem
+    - camera.garagem
+dispositivos:
+  name: Dispositivos
+  entities:
+    - sensor.bateria_alexandre
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping  
+    - sensor.cpu_use
+    - sensor.temperatura_da_cpu
+    - sensor.disk_use_mntssd
+    - sensor.ram_use 
+    - sensor.since_last_boot_templated
+    - device_tracker.impressora
+    - device_tracker.camera_gabi
+    - device_tracker.camera_garagem
+    - device_tracker.camera_hd
+    - device_tracker.chromecast
+    - device_tracker.garagem
+    - device_tracker.asus_pc
+    - device_tracker.ps3
+visitantes:
+  name: Visitantes
+  entities:
+    - device_tracker.dani
+    - device_tracker.luana
+    - device_tracker.pedro
+    - device_tracker.danielle
+radio:
+  name: Rádio FM
+  entities:
+  - input_select.chromecast_radio
+  - input_select.radio_station
+audio_e_video:
+  name: Áudio e Vídeo
+  view: yes
+  entities:
+    - device_tracker.homeassistant_prates
+    - device_tracker.najla 
+    - group.radio
+    - media_player.prates
+    - media_player.orange_pi
+    - media_player.plex_web_chrome
+familia:
+  name: Família
+  entities:
+    - device_tracker.najla
+    - sensor.alexandre
+peassoa_e_seguranca:
+  name: Pessoas e Segurança
+  view: yes
+  entities:
+    - group.familia
+    - group.transito
+    - group.visitantes
+    - group.garagem
+    - group.segundo_andar
+    - entity.camera_movel
+outros:
+  name: Outros
+  view: yes
+  entities:
+    - group.dispositivos
