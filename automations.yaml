@@ -1,0 +1,133 @@
+- id: "push_notif_garagem"
+  alias: "Ativa notificações - Garagem"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.sensor_de_movimento_garagem
+    from: 'off'
+    to: 'on'
+  action:
+  - service: notify.chrome_notifier
+    data_template:
+      message: "Movimentação detectada na garagem"
+    data:
+      data:
+        tag: notification-about-garage-alarm
+- id: "push_notif_quarto_gabi"
+  alias: "Ativa notificações - Quarto da Gabi"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.sensor_de_movimento_quarto_gabi
+    from: 'off'
+    to: 'on'
+  action:
+  - service: notify.chrome_notifier
+    data_template:
+      message: "Movimentação detectada no quarto da Gabi"
+    data:
+      data:
+        tag: notification-about-gabi-alarm
+- id: "ir_inicia_radio"
+  alias: IR - Inicia a Radio
+  trigger:
+    platform: event
+    event_type: ir_command_received
+    event_data:
+      button_name: radio_on
+  action:
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.orange_pi
+      volume_level: '0.5'
+  - service: input_select.select_next
+    data:
+      entity_id: input_select.radio_station
+  - service: script.radio_start
+- id: "ir_para_radio"
+  alias: IR - Para a Radio
+  trigger:
+    platform: event
+    event_type: ir_command_received
+    event_data:
+      button_name: radio_off
+  action:
+  - service: input_select.select_option
+    data:
+      option: Desligado
+      entity_id: input_select.radio_station
+  - service: script.radio_start
+- id: "aciona_garagem"
+  alias: IR - Aciona a garagem
+  trigger:
+    platform: event
+    event_type: ir_command_received
+    event_data:
+      button_name: seq01
+  action:
+  - service: script.acionar_garagem
+  - service: notify.chrome_notifier
+    data_template:
+      message: "Atenção: acionado o portão da garagem via controle remoto."
+    data:
+      data:
+        tag: notification-about-garage-door
+- id: "inicia_radio"
+  alias: Inicia o Radio
+  trigger:
+    platform: state
+    entity_id: input_select.radio_station
+  action:
+  - service: script.radio_start
+- id: "desliga_alarme_quando_em_casa"
+  alias: Desliga Alarme
+  condition: []
+  trigger:
+  - entity_id: device_tracker.homeassistant_prates
+    platform: state
+    to: home
+  - entity_id: device_tracker.najla
+    platform: state
+    to: home
+  action:
+  - data:
+      entity_id: automation.ativa_notificacoes__garagem
+    service: automation.turn_off
+  - data:
+      entity_id: automation.ativa_notificacoes__quarto_da_gabi
+    service: automation.turn_off
+- id: "push_notif_najla_em_casa"
+  alias: Notifica que Najla chegou
+  trigger:
+    platform: state
+    entity_id: device_tracker.najla
+    to: 'home'
+  action:
+  - service: notify.chrome_notifier
+    data_template:
+      message: "Najla chegou em casa"
+    data:
+      data:
+        tag: notification-about-home-presence
+- id: "push_notif_alexandre_em_casa"
+  alias: "Avisa que cheguei em casa"
+  trigger:
+    platform: zone
+    event: enter
+    zone: zone.home
+    entity_id: device_tracker.homeassistant_prates
+  action:
+  - service: notify.chrome_notifier
+    data:
+      message: "Bem-vindo!"
+      data:
+        actions:
+        - action: botao_acionar_garage
+          title: "Acionar Garagem"
+- id: "acionar_garagem_por_bota_no_push_notif"
+  alias: "Acionar garagem via botão em notificação"
+  trigger:
+    platform: event
+    event_type: html5_notification.clicked
+    event_data:
+      action: botao_acionar_garage
+  action:
+  - service: script.acionar_garagem
