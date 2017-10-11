@@ -1,12 +1,9 @@
 homeassistant:
-  # Local onde o Home Assistant está
   name: Casa
   # Localização, usada para determinar quando o sol nasce e se põe
   latitude: !secret latitude
   longitude: !secret longitude
-  # Altitude acima do mar (impacta hora do nascer e por do sol)
   elevation: !secret elevation
-  # metric para Métrico, imperial para Imperial
   unit_system: metric
   # Selecione timezone aqui: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Sao_Paulo
@@ -235,13 +232,6 @@ media_player:
     name: Orange Pi
   - platform: cast
     name: Chromecast
-# Inutil, nao vejo o que atuomatizar no Plex ou Spotify
-# pois precisam que um cliente seja aberto
-#  - platform: plex
-#  - platform: spotify
-#    client_id: d720b9b1712d46999aef17cb4dbc4751
-#    client_secret: 713cbfa4a0de4be6ba9230578c014dcb
-
 
 # Mosquitto broker
 mqtt:
