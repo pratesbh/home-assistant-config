@@ -1,0 +1,326 @@
+homeassistant:
+  # Local onde o Home Assistant está
+  name: Casa
+  # Localização, usada para determinar quando o sol nasce e se põe
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Altitude acima do mar (impacta hora do nascer e por do sol)
+  elevation: !secret elevation
+  # metric para Métrico, imperial para Imperial
+  unit_system: metric
+  # Selecione timezone aqui: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Sao_Paulo
+  customize: !include customize.yaml
+  #Oculta sensores IGD (agregados pelo UPNP)
+  customize_glob:
+    "sensor.igd_*":
+      hidden: true
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Logger para warnings no diretorio .homeassistant
+logger:
+  default: warning
+  logs:
+    #Oculta logs de erro da camera (erro na biblioteca)
+    requests.packages.urllib3: critical
+
+http:
+  # Senha do home assistant
+  api_password: !secret password01
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+#  base_url: http://blablabla.duckdns.net:8123
+
+upnp:
+
+# Procura por atualizações do sistema
+updater:
+
+# Descobre novos dispositivos
+discovery:
+
+# Comandos por voz na interface web
+conversation:
+
+# Salva dados em banco de dados SQLite
+recorder:
+  exclude:
+    domains:
+      - camera
+    entities:
+      - sun.sun
+      - sensor.since_last_boot
+      - sensor.since_last_boot_templated
+      - sensor.ram_use
+      - sensor.cpu_use
+      
+# Habilita histórico
+history:
+  exclude:
+    domains:
+      - automation
+      - script
+      - persistent_notification
+      - group
+      - device_tracker
+      - input_select
+      - camera
+      - switch
+    entities:
+      - sensor.ram_use
+      - sensor.cpu_use
+      - sensor.disk_use_mntssd
+
+# Habilita logbook
+logbook:
+  exclude:
+    domains:
+    - automation
+
+# Monitora o sol - que pode ser usado em automações
+sun:
+
+#Zonas de interesse
+zone: !include zones.yaml
+
+# Sensor do clima
+sensor:
+  - platform: yr
+    monitored_conditions:
+      - temperature
+      - humidity
+# Sensor da bateria (enviado pelo Owntracks)  
+  - platform: mqtt
+    state_topic: "owntracks/homeassistant/prates"
+    name: "Bateria Alexandre"
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.batt }}'
+# Tempo de viagem para locais de interesse, via Google Maps
+  - platform: google_travel_time
+    name: Unitec Semicondutores
+    api_key: !secret google_api_key
+    origin: Casa
+    destination: Unitec Semicondutores
+    hidden: true
+  - platform: google_travel_time
+    name: Alexandre -> Casa
+    api_key: !secret google_api_key
+    origin: device_tracker.homeassistant_prates
+    destination: Casa
+    hidden: true
+  - platform: google_travel_time
+    name: Hospital Militar
+    api_key: !secret google_api_key 
+    origin: Casa
+    destination: Hospital da Polícia Militar de Belo Horizonte
+    options:
+      mode: transit
+    hidden: true
+#Testa a velocidade da internet
+  - platform: speedtest
+    monitored_conditions:
+      - ping
+      - download
+      - upload
+#Monitora o estado do OPi
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /mnt/ssd
+      - type: memory_use_percent
+      - type: since_last_boot
+      - type: processor_use
+  - platform: command_line
+    name: Temperatura da CPU
+    command: cat /etc/armbianmonitor/datasources/soctemp
+    unit_of_measurement: "°C"
+# Converte o uptime para facilitar leitura
+  - platform: template
+    sensors:
+      since_last_boot_templated:
+        value_template: >-
+          {%- set slb = states.sensor.since_last_boot.state.split(' ') -%}
+          {%- set count = slb | length -%}
+          {%- set hms = slb[count - 1] -%}
+          {%- set hms_trimmed = hms.split('.')[0] -%}
+          {%- set hms_split = hms_trimmed.split(':') -%}
+          {%- set hours = hms_split[0] | int -%}
+          {%- set minutes = hms_split[1] | int -%}
+          {%- set seconds = hms_split[2] | int -%}
+
+          {%- if count == 3 -%}
+            {{ slb[0] ~ ' ' ~ slb[1] ~ ' ' }}
+          {%- endif -%}
+          {%- if hours > 0 -%}
+            {%- if hours == 1 -%}
+              1 hour
+            {%- else -%}
+              {{ hours }} hours
+            {%- endif -%}
+          {%- endif -%}
+# Geocode reverso, para informar rua / cidade das pessoas rastreadas pelo Owntracks
+  - platform: google_geocode
+    origin: device_tracker.homeassistant_prates
+    name: Alexandre
+    options: formatted_address
+    api_key: !secret google_api_key
+
+# Polling das cameras para notificar sobre movimento
+binary_sensor:
+  - platform: command_line
+    name: Sensor de movimento garagem
+    command: !secret cam01_movimento 
+    payload_on: 1
+    payload_off: 0
+    device_class: motion
+    scan_interval: 15
+  - platform: command_line
+    name: Sensor de movimento quarto Gabi
+    command: !secret cam02_movimento 
+    payload_on: 1
+    payload_off: 0
+    device_class: motion
+    scan_interval: 15
+# Topico MQTT atualizado pelo tasker para informar que está dirigindo
+  - platform: mqtt
+    state_topic: "tasker/prates/dirigindo"
+    name: "Alexandre dirigindo"
+    device_class: moving
+
+# Camera da garagem
+camera:
+  - platform: mjpeg
+    mjpeg_url: !secret cam01_video
+    still_image_url: !secret cam01_photo
+    username: admin
+    password: !secret password01
+    name: Garagem
+  - platform: mjpeg
+    mjpeg_url: !secret cam02_video
+    still_image_url: !secret cam02_photo
+    username: admin
+    password: !secret password01
+    name: Quarto Gabi
+# Camera nao permite autenticação como as demais
+  - platform: mjpeg
+    mjpeg_url: !secret cam03_video 
+    name: Camera Movel
+
+# Rastreamento de dispositivos (e pessoas)
+#Lembre-se de sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip /usr/bin/nmap
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 192.168.0.1/24
+    scan_options: "--privileged -sN --host-timeout 5s  "
+    interval_seconds: 30
+    consider_home: 600
+#    home_interval: 5
+    exclude:
+      - 192.168.0.11
+  - platform: owntracks
+    max_gps_accuracy: 200
+
+# VLC = player do OPi
+media_player:
+  - platform: vlc
+    name: Orange Pi
+  - platform: cast
+    name: Chromecast
+# Inutil, nao vejo o que atuomatizar no Plex ou Spotify
+# pois precisam que um cliente seja aberto
+#  - platform: plex
+#  - platform: spotify
+#    client_id: d720b9b1712d46999aef17cb4dbc4751
+#    client_secret: 713cbfa4a0de4be6ba9230578c014dcb
+
+
+# Mosquitto broker
+mqtt:
+  broker: localhost
+
+# LIRC
+lirc:
+
+# Para gerar TTS, que podem ser enviados pra um media_player
+tts:
+  - platform: google
+    language: 'pt-br'
+
+# Interruptores para acioanr o portao da garagem
+# deligar deteccao de movimento das cameras
+switch:
+  platform: command_line
+  switches:
+    portao_garagem:
+      command_on: !secret cam01_out_on 
+      command_off: !secret cam01_out_off 
+      friendly_name: Portao Garagem
+    deteccao_movimento_garagem:
+      command_on: !secret cam01_motion_detect_on
+      command_off: !secret cam01_motion_detect_off
+      command_state: !secret cam01_motion_detect_state
+      value_template: '{{ value == "1" }}'
+      friendly_name: Detectar movimento na garagem
+    deteccao_movimento_quarto_gabi:
+      command_on: !secret cam02_motion_detect_on 
+      command_off: !secret cam02_motion_detect_off 
+      command_state: !secret cam02_motion_detect_state
+      value_template: '{{ value == "1" }}'
+      friendly_name: Detectar movimento no quarto da Gabi
+# Seletor das radios
+# Necessário associar cada rádio no script
+# Necessário listar cada radio no API.AI
+input_select:
+  radio_station:
+    name: 'Estação:'
+    options:
+      - Desligado
+      - Coca-Cola FM
+      - Villa Mix
+      - CDL FM
+      - 98 FM
+      - Jovem Pan
+      - Itatiaia
+      - Jovem Pan Pagode
+      - Classic FM
+      - Calm Radio - Sleep
+      - Bossa Jazz Brasil
+      - Alvorada
+      - Kiss FM
+      - 89 A Radio Rock
+    initial: Desligado
+  chromecast_radio:
+    name: 'Alto-falante:'
+    options:
+      - OrangePi
+      - Chromecast
+    initial: OrangePi
+    icon: mdi:speaker-wireless
+
+#IFTTT
+ifttt:
+  key: !secret ifttt_key
+
+# Comandos de voz do Api.ai e Actions on Google
+apiai:
+
+#Notificações no celular ou computador (android / chrome apenas)
+notify:
+  - name: Chrome_Notifier
+    platform: html5
+    gcm_api_key: !secret gcm_api_key 
+    gcm_sender_id: !secret gcm_sender_id
+
+intent_script: !include intent_script.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
