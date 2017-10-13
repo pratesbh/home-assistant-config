@@ -13,13 +13,12 @@ sensor.hospital_militar:
 switch.portao_garagem:
   hidden: true
 script.acionar_garagem:
+  hidden: 'true'
   icon: mdi:garage
-  can_cancel: false
 switch.deteccao_movimento_garagem:
   icon: mdi:eye-off
 device_tracker.chromecast:
   icon: mdi:cast
-  hidden: true
 media_player.prates:
   friendly_name: Chromecast
 device_tracker.camera_hd:
@@ -52,4 +51,10 @@ automation.ir__inicia_a_radio:
 automation.ir__aciona_a_garagem:
   hidden: 'true'
 automation.ir__para_a_radio:
+  hidden: 'true'
+device_tracker.tablet_idea:
+  icon: mdi:tablet
+automation.inicia_o_radio:
+  hidden: 'true'
+script.narrar_status_casa:
   hidden: 'true'

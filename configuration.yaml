@@ -219,7 +219,7 @@ device_tracker:
     hosts: 192.168.0.1/24
     scan_options: "--privileged -sN --host-timeout 5s  "
     interval_seconds: 30
-    consider_home: 600
+    consider_home: 300
 #    home_interval: 5
     exclude:
       - 192.168.0.11
@@ -295,6 +295,13 @@ input_select:
       - Chromecast
     initial: OrangePi
     icon: mdi:speaker-wireless
+input_slider: 
+  volume_radio:
+    name: Volume
+    icon: mdi:volume-high
+    min: 0
+    max: 1
+    step: 0.05
 
 #IFTTT
 ifttt:
