@@ -86,3 +86,5 @@ outros:
   view: yes
   entities:
     - group.dispositivos
+    - sensor.alexandre
+    - device_tracker.homeassistant_prates
