@@ -56,7 +56,7 @@
       entity_id: input_select.radio_station
   - service: script.radio_start
 - id: "volume_radio"
-  alias: 'Set Radio Volume'
+  alias: 'Ajusta volume do radio'
   trigger:
     platform: state
     entity_id: input_slider.volume_radio
@@ -94,7 +94,7 @@
   alias: Desliga Alarme
   condition: []
   trigger:
-  - entity_id: device_tracker.homeassistant_prates
+  - entity_id: device_tracker.alexandre
     platform: state
     to: home
   - entity_id: device_tracker.najla
@@ -102,11 +102,25 @@
     to: home
   action:
   - data:
-      entity_id: automation.ativa_notificacoes__garagem
-    service: automation.turn_off
+      entity_id: switch.deteccao_movimento_garagem
+    service: switch.turn_off
   - data:
-      entity_id: automation.ativa_notificacoes__quarto_da_gabi
-    service: automation.turn_off
+      entity_id: switch.deteccao_movimento_quarto_gabi
+    service: switch.turn_off
+- id: "liga_alarme_quando_casa_vazia"
+  alias: Liga Alarme
+  condition: []
+  trigger:
+  - entity_id: group.familia
+    platform: state
+    from: home
+  action:
+  - data:
+      entity_id: switch.deteccao_movimento_garagem
+    service: switch.turn_on
+  - data:
+      entity_id: switch.deteccao_movimento_quarto_gabi
+    service: switch.turn_on
 - id: "push_notif_najla_em_casa"
   alias: Notifica que Najla chegou
   trigger:

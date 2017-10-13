@@ -13,7 +13,6 @@ sensor.hospital_militar:
 switch.portao_garagem:
   hidden: true
 script.acionar_garagem:
-  hidden: 'true'
   icon: mdi:garage
 switch.deteccao_movimento_garagem:
   icon: mdi:eye-off
@@ -46,15 +45,9 @@ sensor.alexandre:
   entity_picture: /local/images/alexandre.jpg
 sensor.since_last_boot:
   hidden: 'true'
-automation.ir__inicia_a_radio:
-  hidden: 'true'
-automation.ir__aciona_a_garagem:
-  hidden: 'true'
-automation.ir__para_a_radio:
-  hidden: 'true'
 device_tracker.tablet_idea:
   icon: mdi:tablet
-automation.inicia_o_radio:
-  hidden: 'true'
 script.narrar_status_casa:
+  hidden: 'true'
+group.familia:
   hidden: 'true'

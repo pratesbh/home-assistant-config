@@ -1,29 +1,40 @@
 # Grupos
-transito:
-  name: Trânsito
-  entities:
-    - sensor.unitec_semicondutores
-    - sensor.alexandre__casa
-    - sensor.hospital_militar
-    - binary_sensor.alexandre_dirigindo
-segundo_andar:
-  name: Segundo Andar
-  entities:
-    - switch.deteccao_movimento_quarto_gabi
-    - binary_sensor.sensor_de_movimento_quarto_gabi
-    - camera.quarto_gabi
 garagem:
   name: Garagem
   control: hidden
   entities:
     - switch.deteccao_movimento_garagem
-    - binary_sensor.sensor_de_movimento_garagem
+    - binary_sensor.movimento_garagem
     - script.acionar_garagem
     - camera.garagem
+quarto_gabi:
+  name: Quarto Gabi
+  entities:
+    - switch.deteccao_movimento_quarto_gabi
+    - binary_sensor.movimento_quarto_gabi
+    - camera.quarto_gabi
+familia:
+  name: Família
+  entities:
+    - device_tracker.alexandre
+    - device_tracker.najla
+visitantes:
+  name: Visitantes
+  entities:
+    - device_tracker.dani
+    - device_tracker.luana
+    - device_tracker.pedro
+    - device_tracker.danielle
+radio:
+  name: Rádio FM
+  entities:
+  - input_select.chromecast_radio
+  - input_select.radio_station
+  - input_slider.volume_radio
 dispositivos:
   name: Dispositivos
   entities:
-    - sensor.bateria_alexandre
+    - sensor.bateria_motog_alexandre
     - sensor.speedtest_download
     - sensor.speedtest_upload
     - sensor.speedtest_ping  
@@ -41,19 +52,6 @@ dispositivos:
     - device_tracker.asus_pc
     - device_tracker.ps3
     - device_tracker.tablet_idea
-visitantes:
-  name: Visitantes
-  entities:
-    - device_tracker.dani
-    - device_tracker.luana
-    - device_tracker.pedro
-    - device_tracker.danielle
-radio:
-  name: Rádio FM
-  entities:
-  - input_select.chromecast_radio
-  - input_select.radio_station
-  - input_slider.volume_radio
 audio_e_video:
   name: Áudio e Vídeo
   view: yes
@@ -64,20 +62,24 @@ audio_e_video:
     - media_player.prates
     - media_player.orange_pi
     - media_player.plex_web_chrome
-familia:
-  name: Família
+transito:
+  name: Trânsito
   entities:
-    - device_tracker.najla
-    - sensor.alexandre
+    - sensor.unitec_semicondutores
+    - sensor.alexandre__casa
+    - sensor.hospital_militar
+    - binary_sensor.alexandre_dirigindo
 peassoa_e_seguranca:
   name: Pessoas e Segurança
   view: yes
   entities:
+    - device_tracker.najla
+    - device_tracker.alexandre
     - group.familia
     - group.transito
     - group.visitantes
     - group.garagem
-    - group.segundo_andar
+    - group.quarto_gabi
     - entity.camera_movel
 outros:
   name: Outros

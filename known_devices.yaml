@@ -132,12 +132,12 @@ impressora:
   track: true
   vendor: Hewlett Packard
 
-88797ed8c2a6:
+alexandre:
   hide_if_away: false
   icon:
   mac: 88:79:7E:D8:C2:A6
-  name: Alexandre nmap
-  picture:
+  name: Alexandre
+  picture: /local/images/alexandre.jpg
   track: true
   vendor: Motorola Mobility LLC, a Lenovo Company
 

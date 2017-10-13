@@ -12,6 +12,8 @@ homeassistant:
   customize_glob:
     "sensor.igd_*":
       hidden: true
+    "automation.*":
+      hidden: true
 
 # Enables the frontend
 frontend:
@@ -98,7 +100,7 @@ sensor:
 # Sensor da bateria (enviado pelo Owntracks)  
   - platform: mqtt
     state_topic: "owntracks/homeassistant/prates"
-    name: "Bateria Alexandre"
+    name: "Bateria MotoG Alexandre"
     unit_of_measurement: "%"
     value_template: '{{ value_json.batt }}'
 # Tempo de viagem para locais de interesse, via Google Maps
@@ -174,14 +176,16 @@ sensor:
 # Polling das cameras para notificar sobre movimento
 binary_sensor:
   - platform: command_line
-    name: Sensor de movimento garagem
+    name: Movimento Garagem
+    friendly_name: Movimento
     command: !secret cam01_movimento 
     payload_on: 1
     payload_off: 0
     device_class: motion
     scan_interval: 15
   - platform: command_line
-    name: Sensor de movimento quarto Gabi
+    name: Movimento Quarto Gabi
+    friendly_name: Movimento
     command: !secret cam02_movimento 
     payload_on: 1
     payload_off: 0
@@ -259,13 +263,13 @@ switch:
       command_off: !secret cam01_motion_detect_off
       command_state: !secret cam01_motion_detect_state
       value_template: '{{ value == "1" }}'
-      friendly_name: Detectar movimento na garagem
+      friendly_name: Sensor de movimento
     deteccao_movimento_quarto_gabi:
       command_on: !secret cam02_motion_detect_on 
       command_off: !secret cam02_motion_detect_off 
       command_state: !secret cam02_motion_detect_state
       value_template: '{{ value == "1" }}'
-      friendly_name: Detectar movimento no quarto da Gabi
+      friendly_name: Sensor de movimento
 # Seletor das radios
 # Necessário associar cada rádio no script
 # Necessário listar cada radio no API.AI
@@ -299,6 +303,7 @@ input_slider:
   volume_radio:
     name: Volume
     icon: mdi:volume-high
+    initial: 0.5
     min: 0
     max: 1
     step: 0.05
