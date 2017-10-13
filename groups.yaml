@@ -40,7 +40,7 @@ dispositivos:
     - device_tracker.garagem
     - device_tracker.asus_pc
     - device_tracker.ps3
-    - device-tracker.tablet_idea
+    - device_tracker.tablet_idea
 visitantes:
   name: Visitantes
   entities:

@@ -141,3 +141,12 @@ impressora:
   picture:
   track: true
   vendor: Motorola Mobility LLC, a Lenovo Company
+
+tablet_idea:
+  hide_if_away: false
+  icon:
+  mac: 44:33:4C:E2:24:BB
+  name: Tablet idea
+  picture:
+  track: true
+  vendor: Shenzhen Bilian electronic CO.,LTD
