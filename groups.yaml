@@ -69,12 +69,15 @@ transito:
     - sensor.alexandre__casa
     - sensor.hospital_militar
     - binary_sensor.alexandre_dirigindo
+tesy:
+  name: Test
+  entities:
+    - sensor.alexandre
+    - device_tracker.homeassistant_prates
 peassoa_e_seguranca:
   name: Pessoas e Segurança
   view: yes
   entities:
-    - device_tracker.najla
-    - device_tracker.alexandre
     - group.familia
     - group.transito
     - group.visitantes
