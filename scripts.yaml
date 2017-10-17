@@ -47,3 +47,19 @@ radio_start:
           {% elif is_state("input_select.radio_station", "Desligar") %} vlc://quit()
           {% endif %}
          media_content_type: 'music'
+snapshot_garagem:
+  alias: Salvar imagem
+  sequence:
+  - service: shell_command.cam01_salva_snapshot_cmd
+snapshot_quarto_gabi:
+  alias: Salvar imagem
+  sequence:
+  - service: shell_command.cam02_salva_snapshot_cmd
+video_garagem:
+  alias: Salvar 1 min video
+  sequence:
+  - service: shell_command.cam01_salva_video_cmd
+video_quarto_gabi:
+  alias: Salvar 1 min video
+  sequence:
+  - service: shell_command.cam02_salva_video_cmd

@@ -2,8 +2,7 @@
   alias: "Ativa notificações - Garagem"
   trigger:
     platform: state
-    entity_id: binary_sensor.sensor_de_movimento_garagem
-    from: 'off'
+    entity_id: binary_sensor.movimento_garagem
     to: 'on'
   action:
   - service: notify.chrome_notifier
@@ -16,8 +15,7 @@
   alias: "Ativa notificações - Quarto da Gabi"
   trigger:
     platform: state
-    entity_id: binary_sensor.sensor_de_movimento_quarto_gabi
-    from: 'off'
+    entity_id: binary_sensor.movimento_quarto_gabi
     to: 'on'
   action:
   - service: notify.chrome_notifier
@@ -59,7 +57,7 @@
   alias: 'Ajusta volume do radio'
   trigger:
     platform: state
-    entity_id: input_slider.volume_radio
+    entity_id: input_number.volume_radio
   action:
     service: media_player.volume_set
     data_template:
@@ -67,7 +65,7 @@
         {% if is_state("input_select.chromecast_radio", "OrangePi") %} media_player.orange_pi
         {% elif is_state("input_select.chromecast_radio", "Chromecast") %} media_player.prates
         {% endif %}
-      volume_level: '{{  states.input_slider.volume_radio.state  }}'
+      volume_level: '{{  states.input_number.volume_radio.state  }}'
 - id: "aciona_garagem"
   alias: IR - Aciona a garagem
   trigger:
@@ -92,7 +90,6 @@
   - service: script.radio_start
 - id: "desliga_alarme_quando_em_casa"
   alias: Desliga Alarme
-  condition: []
   trigger:
   - entity_id: device_tracker.alexandre
     platform: state
@@ -109,7 +106,6 @@
     service: switch.turn_off
 - id: "liga_alarme_quando_casa_vazia"
   alias: Liga Alarme
-  condition: []
   trigger:
   - entity_id: group.familia
     platform: state
@@ -139,7 +135,7 @@
     platform: zone
     event: enter
     zone: zone.home
-    entity_id: device_tracker.homeassistant_prates
+    entity_id: device_tracker.alexandre
   action:
   - service: notify.chrome_notifier
     data:
@@ -157,3 +153,19 @@
       action: botao_acionar_garage
   action:
   - service: script.acionar_garagem
+- id: "gravar_video_mov_garagem"
+  alias: "Gravar video por presença na garagem"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.movimento_garagem
+    to: 'on'
+  action:
+  - service: script.video_garagem
+- id: "gravar_video_mov_quarto_gabi"
+  alias: "Gravar video por presença no quarto da Gabi"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.movimento_quarto_gabi
+    to: 'on'
+  action:
+  - service: script.video_quarto_gabi

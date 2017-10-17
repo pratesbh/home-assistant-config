@@ -149,3 +149,12 @@ tablet_idea:
   picture:
   track: true
   vendor: Shenzhen Bilian electronic CO.,LTD
+
+0023141914:
+  hide_if_away: false
+  icon:
+  mac:
+  name: Alexandre
+  picture: /local/images/alexandre.jpg
+  track: true
+  vendor:

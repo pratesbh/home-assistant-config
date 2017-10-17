@@ -13,9 +13,10 @@ sensor.hospital_militar:
 switch.portao_garagem:
   hidden: true
 script.acionar_garagem:
+  can_cancel: false
   icon: mdi:garage
 switch.deteccao_movimento_garagem:
-  icon: mdi:eye-off
+  icon: mdi:eye
 device_tracker.chromecast:
   icon: mdi:cast
 media_player.prates:
@@ -37,7 +38,7 @@ sun.sun:
 script.radio_start:
   hidden: true
 switch.deteccao_movimento_quarto_gabi:
-  icon: mdi:eye-off
+  icon: mdi:eye
 sensor.since_last_boot_templated:
   friendly_name: Uptime
   icon: mdi:clock
@@ -51,3 +52,14 @@ script.narrar_status_casa:
   hidden: 'true'
 group.familia:
   hidden: 'true'
+switch.tomada_quarto_gabi:
+  assumed_state: false
+  icon: mdi:power-plug
+script.snapshot_garagem:
+  icon: mdi:camera
+script.snapshot_quarto_gabi:
+  icon: mdi:camera
+script.video_quarto_gabi:
+  icon: mdi:camcorder-box
+script.video_garagem:
+  icon: mdi:camcorder-box

@@ -142,6 +142,7 @@ sensor:
     name: Temperatura da CPU
     command: cat /etc/armbianmonitor/datasources/soctemp
     unit_of_measurement: "°C"
+    scan_interval: 300
 # Converte o uptime para facilitar leitura
   - platform: template
     sensors:
@@ -229,6 +230,7 @@ device_tracker:
       - 192.168.0.11
   - platform: owntracks
     max_gps_accuracy: 200
+  - platform: gpslogger
 
 # VLC = player do OPi
 media_player:
@@ -258,6 +260,10 @@ switch:
       command_on: !secret cam01_out_on 
       command_off: !secret cam01_out_off 
       friendly_name: Portao Garagem
+    tomada_quarto_gabi:
+      command_on: !secret cam02_out_on 
+      command_off: !secret cam02_out_off 
+      friendly_name: Tomada Quarto Gabi 
     deteccao_movimento_garagem:
       command_on: !secret cam01_motion_detect_on
       command_off: !secret cam01_motion_detect_off
@@ -270,6 +276,11 @@ switch:
       command_state: !secret cam02_motion_detect_state
       value_template: '{{ value == "1" }}'
       friendly_name: Sensor de movimento
+shell_command:
+  cam01_salva_snapshot_cmd: '/home/prates/.homeassistant/shell_command/cam01_salva_snapshot.sh' 
+  cam02_salva_snapshot_cmd: '/home/prates/.homeassistant/shell_command/cam02_salva_snapshot.sh' 
+  cam01_salva_video_cmd: '/home/prates/.homeassistant/shell_command/cam01_salva_video.sh' 
+  cam02_salva_video_cmd: '/home/prates/.homeassistant/shell_command/cam02_salva_video.sh' 
 # Seletor das radios
 # Necessário associar cada rádio no script
 # Necessário listar cada radio no API.AI
@@ -299,7 +310,7 @@ input_select:
       - Chromecast
     initial: OrangePi
     icon: mdi:speaker-wireless
-input_slider: 
+input_number: 
   volume_radio:
     name: Volume
     icon: mdi:volume-high

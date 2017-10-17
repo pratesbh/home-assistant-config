@@ -6,12 +6,18 @@ garagem:
     - switch.deteccao_movimento_garagem
     - binary_sensor.movimento_garagem
     - script.acionar_garagem
+    - script.snapshot_garagem
+    - script.video_garagem
     - camera.garagem
 quarto_gabi:
   name: Quarto Gabi
+  control: hidden
   entities:
     - switch.deteccao_movimento_quarto_gabi
     - binary_sensor.movimento_quarto_gabi
+    - switch.tomada_quarto_gabi
+    - script.snapshot_quarto_gabi
+    - script.video_quarto_gabi
     - camera.quarto_gabi
 familia:
   name: Família
@@ -30,7 +36,7 @@ radio:
   entities:
   - input_select.chromecast_radio
   - input_select.radio_station
-  - input_slider.volume_radio
+  - input_number.volume_radio
 dispositivos:
   name: Dispositivos
   entities:
@@ -69,11 +75,12 @@ transito:
     - sensor.alexandre__casa
     - sensor.hospital_militar
     - binary_sensor.alexandre_dirigindo
-tesy:
+test:
   name: Test
   entities:
     - sensor.alexandre
     - device_tracker.homeassistant_prates
+    - device_tracker.0023141914
 peassoa_e_seguranca:
   name: Pessoas e Segurança
   view: yes
