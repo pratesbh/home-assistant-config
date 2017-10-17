@@ -19,6 +19,16 @@ quarto_gabi:
     - script.snapshot_quarto_gabi
     - script.video_quarto_gabi
     - camera.quarto_gabi
+lavanderia:
+  name: Lavanderia
+  control: hidden
+  entities:
+    - switch.deteccao_movimento_lavanderia
+    - binary_sensor.movimento_lavanderia
+    - script.snapshot_lavanderia
+    - script.video_lavanderia
+    - camera.lavanderia
+    
 familia:
   name: Família
   entities:
@@ -40,7 +50,6 @@ radio:
 dispositivos:
   name: Dispositivos
   entities:
-    - sensor.bateria_motog_alexandre
     - sensor.speedtest_download
     - sensor.speedtest_upload
     - sensor.speedtest_ping  
@@ -52,7 +61,7 @@ dispositivos:
     - device_tracker.impressora
     - device_tracker.camera_gabi
     - device_tracker.camera_garagem
-    - device_tracker.camera_hd
+    - device_tracker.camera_lavanderia
     - device_tracker.chromecast
     - device_tracker.garagem
     - device_tracker.asus_pc
@@ -62,7 +71,7 @@ audio_e_video:
   name: Áudio e Vídeo
   view: yes
   entities:
-    - device_tracker.homeassistant_prates
+    - device_tracker.alexandre
     - device_tracker.najla 
     - group.radio
     - media_player.prates
@@ -74,12 +83,10 @@ transito:
     - sensor.unitec_semicondutores
     - sensor.alexandre__casa
     - sensor.hospital_militar
-    - binary_sensor.alexandre_dirigindo
 test:
   name: Test
   entities:
     - sensor.alexandre
-    - device_tracker.homeassistant_prates
     - device_tracker.0023141914
 peassoa_e_seguranca:
   name: Pessoas e Segurança
@@ -90,11 +97,10 @@ peassoa_e_seguranca:
     - group.visitantes
     - group.garagem
     - group.quarto_gabi
-    - entity.camera_movel
+    - group.lavanderia
 outros:
   name: Outros
   view: yes
   entities:
     - group.dispositivos
     - sensor.alexandre
-    - device_tracker.homeassistant_prates

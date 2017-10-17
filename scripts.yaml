@@ -55,6 +55,10 @@ snapshot_quarto_gabi:
   alias: Salvar imagem
   sequence:
   - service: shell_command.cam02_salva_snapshot_cmd
+snapshot_lavanderia:
+  alias: Salvar imagem
+  sequence:
+  - service: shell_command.cam03_salva_snapshot_cmd
 video_garagem:
   alias: Salvar 1 min video
   sequence:
@@ -63,3 +67,7 @@ video_quarto_gabi:
   alias: Salvar 1 min video
   sequence:
   - service: shell_command.cam02_salva_video_cmd
+video_lavanderia:
+  alias: Salvar 1 min video
+  sequence:
+  - service: shell_command.cam03_salva_video_cmd

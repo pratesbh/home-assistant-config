@@ -1,51 +1,3 @@
-TemperaturaIntent:
-  speech:
-    text: A temperatura em casa é {{ states('sensor.yr_temperature') | round(0) }} graus
-LocalizarIntent:
-  speech:
-    text: >
-      {%- for state in states.device_tracker -%}
-        {%- if state.name.lower() == User.lower() -%}
-          {{ state.name }} está em {{ state.state }}
-        {%- elif loop.last -%}
-          Desculpe, não sei aonde {{ User }} se encontra.
-        {%- endif -%}
-      {%- else -%}
-        Desculpe, não tenho rastreadores ativos.
-      {%- endfor -%}
-OndeEstaoIntent:
-  speech:
-    text: >
-      {%- if is_state('device_tracker.homeassistant_prates', 'home') and
-             is_state('device_tracker.d463c6d669c7', 'home') -%}
-        Todo mundo está em casa, ora bolas.
-      {%- else -%}
-        Alexandre está em {{ states("device_tracker.homeassistant_prates") }}
-        e Najla está em {{ states("device_tracker.d463c6d669c7") }}
-      {% endif %}
-AlarmeIntent:
-  speech:
-    text: Vou {{ OnOff }} o alarme em {{ Room }}
-  action:
-    - service: persistent_notification.create
-      data_template:
-        message: Alguém solicitou {{ OnOff }} o alarme em {{ Room }}
-    - service_template: >
-        {%- if OnOff == "ativar" -%}
-          switch.turn_on
-        {%- else -%}
-          switch.turn_off
-        {%- endif -%}
-      data_template:
-        entity_id: "switch.deteccao_movimento_{{ Room | replace(' ', '_') }}"
-GaragemIntent:
-  speech:
-    text: Acionando a garagem. Certifique-se que não há obstáculos no caminho do portão, como a Gabriela ou o Jeep Compass.
-  action:
-    - service: persistent_notification.create
-      data_template:
-        message: Portão da garagem acionado pelo Google Assistant.
-    - service: script.acionar_garagem
 Temperature:
   speech:
     text: Temperature at home is {{ states('sensor.yr_temperature') | round(0) }} degrees
@@ -64,12 +16,12 @@ LocateIntent:
 WhereAreWeIntent:
   speech:
     text: >
-      {%- if is_state('device_tracker.homeassistant_prates', 'home') and
-             is_state('device_tracker.d463c6d669c7', 'home') -%}
+      {%- if is_state('device_tracker.0023141914', 'home') and
+             is_state('device_tracker.najla', 'home') -%}
         Everybody is at home, you fool
       {%- else -%}
         Alexandre is at {{ states("sensor.alexandre") }}
-        and Najla is at {{ states("device_tracker.d463c6d669c7") }}
+        and Najla is at {{ states("device_tracker.najla") }}
       {% endif %}
 TurnAlarm:
   speech:

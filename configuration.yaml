@@ -97,12 +97,6 @@ sensor:
     monitored_conditions:
       - temperature
       - humidity
-# Sensor da bateria (enviado pelo Owntracks)  
-  - platform: mqtt
-    state_topic: "owntracks/homeassistant/prates"
-    name: "Bateria MotoG Alexandre"
-    unit_of_measurement: "%"
-    value_template: '{{ value_json.batt }}'
 # Tempo de viagem para locais de interesse, via Google Maps
   - platform: google_travel_time
     name: Unitec Semicondutores
@@ -113,7 +107,7 @@ sensor:
   - platform: google_travel_time
     name: Alexandre -> Casa
     api_key: !secret google_api_key
-    origin: device_tracker.homeassistant_prates
+    origin: device_tracker.0023141914
     destination: Casa
     hidden: true
   - platform: google_travel_time
@@ -169,7 +163,7 @@ sensor:
           {%- endif -%}
 # Geocode reverso, para informar rua / cidade das pessoas rastreadas pelo Owntracks
   - platform: google_geocode
-    origin: device_tracker.homeassistant_prates
+    origin: device_tracker.0023141914
     name: Alexandre
     options: formatted_address
     api_key: !secret google_api_key
@@ -192,11 +186,14 @@ binary_sensor:
     payload_off: 0
     device_class: motion
     scan_interval: 15
-# Topico MQTT atualizado pelo tasker para informar que está dirigindo
-  - platform: mqtt
-    state_topic: "tasker/prates/dirigindo"
-    name: "Alexandre dirigindo"
-    device_class: moving
+  - platform: command_line
+    name: Movimento Lavanderia
+    friendly_name: Movimento
+    command: !secret cam03_movimento 
+    payload_on: 1
+    payload_off: 0
+    device_class: motion
+    scan_interval: 15
 
 # Camera da garagem
 camera:
@@ -215,7 +212,7 @@ camera:
 # Camera nao permite autenticação como as demais
   - platform: mjpeg
     mjpeg_url: !secret cam03_video 
-    name: Camera Movel
+    name: Lavanderia
 
 # Rastreamento de dispositivos (e pessoas)
 #Lembre-se de sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip /usr/bin/nmap
@@ -228,8 +225,6 @@ device_tracker:
 #    home_interval: 5
     exclude:
       - 192.168.0.11
-  - platform: owntracks
-    max_gps_accuracy: 200
   - platform: gpslogger
 
 # VLC = player do OPi
@@ -240,8 +235,8 @@ media_player:
     name: Chromecast
 
 # Mosquitto broker
-mqtt:
-  broker: localhost
+#mqtt:
+#  broker: localhost
 
 # LIRC
 lirc:
@@ -276,11 +271,19 @@ switch:
       command_state: !secret cam02_motion_detect_state
       value_template: '{{ value == "1" }}'
       friendly_name: Sensor de movimento
+    deteccao_movimento_lavanderia:
+      command_on: !secret cam03_motion_detect_on 
+      command_off: !secret cam03_motion_detect_off 
+      command_state: !secret cam03_motion_detect_state
+      value_template: '{{ value == "1" }}'
+      friendly_name: Sensor de movimento
 shell_command:
   cam01_salva_snapshot_cmd: '/home/prates/.homeassistant/shell_command/cam01_salva_snapshot.sh' 
   cam02_salva_snapshot_cmd: '/home/prates/.homeassistant/shell_command/cam02_salva_snapshot.sh' 
+  cam03_salva_snapshot_cmd: '/home/prates/.homeassistant/shell_command/cam03_salva_snapshot.sh' 
   cam01_salva_video_cmd: '/home/prates/.homeassistant/shell_command/cam01_salva_video.sh' 
   cam02_salva_video_cmd: '/home/prates/.homeassistant/shell_command/cam02_salva_video.sh' 
+  cam03_salva_video_cmd: '/home/prates/.homeassistant/shell_command/cam03_salva_video.sh' 
 # Seletor das radios
 # Necessário associar cada rádio no script
 # Necessário listar cada radio no API.AI

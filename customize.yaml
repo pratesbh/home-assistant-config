@@ -21,7 +21,7 @@ device_tracker.chromecast:
   icon: mdi:cast
 media_player.prates:
   friendly_name: Chromecast
-device_tracker.camera_hd:
+device_tracker.camera_lavanderia:
   icon: mdi:cctv
 device_tracker.camera_garagem:
   icon: mdi:cctv
@@ -59,7 +59,13 @@ script.snapshot_garagem:
   icon: mdi:camera
 script.snapshot_quarto_gabi:
   icon: mdi:camera
+script.snapshot_lavanderia:
+  icon: mdi:camera
 script.video_quarto_gabi:
   icon: mdi:camcorder-box
 script.video_garagem:
   icon: mdi:camcorder-box
+script.video_lavanderia:
+  icon: mdi:camcorder-box
+switch.deteccao_movimento_lavanderia:
+  icon: mdi:mdi:eye

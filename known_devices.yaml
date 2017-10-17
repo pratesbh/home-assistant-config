@@ -1,8 +1,8 @@
-camera_hd:
+camera_lavanderia:
   hide_if_away: false
   icon:
   mac: 48:02:2A:B0:01:CE
-  name: Camera HD
+  name: Camera Lavanderia
   picture:
   track: true
   vendor: B-Link Electronic Limited
@@ -60,14 +60,6 @@ chromecast:
   picture:
   track: true
   vendor: AzureWave Technology Inc.
-
-homeassistant_prates:
-  hide_if_away: false
-  icon:
-  name: Alexandre
-  picture: /local/images/alexandre.jpg
-  track: true
-  vendor: Motorola Mobility LLC, a Lenovo Company
 
 dani:
   hide_if_away: false
