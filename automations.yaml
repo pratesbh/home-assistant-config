@@ -20,7 +20,7 @@
     data:
       data:
         vibrate: [200,100,200,100,200]
-- id: "push_notif_movimento_cameras"
+- id: "notif_movimento_cameras"
   alias: "Notificações de movimento"
   trigger:
     platform: state
@@ -54,8 +54,8 @@
     data:
       entity_id: input_select.radio_station
   - service: script.radio_start
-- id: "ir_para_radio"
-  alias: IR - Para a Radio
+- id: "ir_desliga_radio"
+  alias: IR - Desliga a Radio
   trigger:
     platform: event
     event_type: ir_command_received
@@ -91,10 +91,12 @@
   - service: script.acionar_garagem
   - service: notify.chrome_notifier
     data_template:
-      message: "Atenção: acionado o portão da garagem via controle remoto."
+      title: "Garagem"
+      message: "Atenção: portão da garagem acionado via controle remoto."
     data:
       data:
         tag: notification-about-garage-door
+        vibrate: [200,100,200,100,200]
 - id: "inicia_radio"
   alias: Inicia o Radio
   trigger:
@@ -104,13 +106,12 @@
   - service: script.radio_start
 - id: "desliga_alarme_quando_em_casa"
   alias: Desliga Alarme
-  trigger:
-  - entity_id: device_tracker.alexandre
+  trigger
     platform: state
-    to: home
-  - entity_id: device_tracker.najla
-    platform: state
-    to: home
+    entity_id:
+      - device_tracker.alexandre
+      - device_tracker.najla
+    to: 'home'
   action:
   - data:
       entity_id: switch.deteccao_movimento_garagem
@@ -131,7 +132,7 @@
   - data:
       entity_id: switch.deteccao_movimento_quarto_gabi
     service: switch.turn_on
-- id: "push_notif_najla_em_casa"
+- id: "notif_najla_em_casa"
   alias: Notifica que Najla chegou
   trigger:
     platform: state
@@ -140,10 +141,12 @@
   action:
   - service: notify.chrome_notifier
     data:
+      title: "Família"
       message: "Najla chegou em casa"
       data:
         tag: notification-about-home-presence
-- id: "push_notif_alexandre_em_casa"
+        vibrate: [200,100,200,100,600]
+- id: "notif_alexandre_em_casa"
   alias: "Avisa que cheguei em casa"
   trigger:
     platform: zone
@@ -153,8 +156,10 @@
   action:
   - service: notify.chrome_notifier
     data:
+      title: "Família"
       message: "Bem-vindo!"
       data:
+        vibrate: [200,100,200,100,600]
         actions:
         - action: botao_acionar_garage
           title: "Acionar Garagem"
