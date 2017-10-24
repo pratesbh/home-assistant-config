@@ -70,8 +70,7 @@ history:
       - script
       - persistent_notification
       - group
-      - device_tracker
-      - input_select
+      - input_number
       - camera
       - switch
     entities:
@@ -137,6 +136,17 @@ sensor:
     command: cat /etc/armbianmonitor/datasources/soctemp
     unit_of_measurement: "°C"
     scan_interval: 300
+  - platform: template
+    sensors:
+      alexandre:
+        value_template: "{{ states.sensor.alexandre__casa.attributes.origin_addresses[0][0:states.sensor.alexandre__casa.attributes.origin_addresses[0]|length-13] }}"
+  - platform: template
+    sensors:
+      bateria_alexandre:
+        friendly_name: "Celular Alexandre"
+        value_template: "{{ states.device_tracker['0023141914'].attributes.battery|round }}"
+        unit_of_measurement: '%'
+      
 # Converte o uptime para facilitar leitura
   - platform: template
     sensors:
@@ -161,15 +171,39 @@ sensor:
               {{ hours }} hours
             {%- endif -%}
           {%- endif -%}
-# Geocode reverso, para informar rua / cidade das pessoas rastreadas pelo Owntracks
-  - platform: google_geocode
-    origin: device_tracker.0023141914
-    name: Alexandre
-    options: formatted_address
-    api_key: !secret google_api_key
 
 # Polling das cameras para notificar sobre movimento
 binary_sensor:
+  - platform: template
+    sensors:
+      tv_sala:
+        value_template: "{{ is_state('device_tracker.tv_sala', 'home') }}"
+        friendly_name: TV Sala
+      chromecast:
+        value_template: "{{ is_state('device_tracker.chromecast', 'home') }}"
+        friendly_name: Chromecast
+      ps3:
+        value_template: "{{ is_state('device_tracker.ps3', 'home') }}"
+        friendly_name: PS3
+      impressora:
+        value_template: "{{ is_state('device_tracker.impressora', 'home') }}"
+        friendly_name: Impressora
+      camera_gabi:
+        value_template: "{{ is_state('device_tracker.camera_gabi', 'home') }}"
+        friendly_name: Câmera Gabi
+      camera_garagem:
+        value_template: "{{ is_state('device_tracker.camera_garagem', 'home') }}"
+        friendly_name: Câmera Garagem
+      camera_lavanderia:
+        value_template: "{{ is_state('device_tracker.camera_lavanderia', 'home') }}"
+        friendly_name: Câmera Lavanderia
+      asus_pc:
+        value_template: "{{ is_state('device_tracker.asus_pc', 'home') }}"
+        friendly_name: Asus PC
+      tablet_idea:
+        value_template: "{{ is_state('device_tracker.tablet_idea', 'home') }}"
+        friendly_name: Tablet Idea
+    
   - platform: command_line
     name: Movimento Garagem
     friendly_name: Movimento

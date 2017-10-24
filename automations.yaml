@@ -1,29 +1,43 @@
-- id: "push_notif_garagem"
-  alias: "Ativa notificações - Garagem"
+- id: 'notif_visitantes'
+  alias: 'Notifica sobre visitantes'
   trigger:
     platform: state
-    entity_id: binary_sensor.movimento_garagem
+    entity_id:
+      - device_tracker.chicao
+      - device_tracker.dani
+      - device_tracker.luana
+      - device_tracker.laura
+      - device_tracker.pedro
+      - device_tracker.danielle
+    to: 'home'
+  action:
+  - delay:
+      seconds: 10
+  - service: notify.chrome_notifier
+    data_template:
+      title: "Visitante"
+      message: "{{ trigger.to_state.attributes.friendly_name }} está em casa."
+    data:
+      data:
+        vibrate: [200,100,200,100,200]
+- id: "push_notif_movimento_cameras"
+  alias: "Notificações de movimento"
+  trigger:
+    platform: state
+    entity_id: 
+      - binary_sensor.movimento_garagem
+      - binary_sensor.movimento_quarto_gabi
     to: 'on'
   action:
   - service: notify.chrome_notifier
     data_template:
-      message: "Movimentação detectada na garagem"
+      title: "Movimentação em casa"
+      message: "{{ trigger.to_state.attributes.friendly_name }}: presença detectada"
     data:
       data:
-        tag: notification-about-garage-alarm
-- id: "push_notif_quarto_gabi"
-  alias: "Ativa notificações - Quarto da Gabi"
-  trigger:
-    platform: state
-    entity_id: binary_sensor.movimento_quarto_gabi
-    to: 'on'
-  action:
-  - service: notify.chrome_notifier
-    data_template:
-      message: "Movimentação detectada no quarto da Gabi"
-    data:
-      data:
-        tag: notification-about-gabi-alarm
+        vibrate: [200,100,200,100,200]
+        image: "/local/images/ipcam.jpg"
+        tag: notificacao-movimento
 - id: "ir_inicia_radio"
   alias: IR - Inicia a Radio
   trigger:
@@ -161,6 +175,7 @@
     to: 'on'
   action:
   - service: script.video_garagem
+  - service: script.snapshot_garagem
 - id: "gravar_video_mov_quarto_gabi"
   alias: "Gravar video por presença no quarto da Gabi"
   trigger:
@@ -169,3 +184,4 @@
     to: 'on'
   action:
   - service: script.video_quarto_gabi
+  - service: script.snapshot_quarto_gabi

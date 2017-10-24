@@ -37,8 +37,10 @@ familia:
 visitantes:
   name: Visitantes
   entities:
+    - device_tracker.chicao
     - device_tracker.dani
     - device_tracker.luana
+    - device_tracker.laura
     - device_tracker.pedro
     - device_tracker.danielle
 radio:
@@ -50,23 +52,24 @@ radio:
 dispositivos:
   name: Dispositivos
   entities:
+    - sensor.bateria_alexandre
     - sensor.speedtest_download
     - sensor.speedtest_upload
     - sensor.speedtest_ping  
-    - sensor.cpu_use
+    - sensor.cpu_used
     - sensor.temperatura_da_cpu
-    - sensor.disk_use_mntssd
-    - sensor.ram_use 
+    - sensor.disk_used_mntssd
+    - sensor.ram_used
     - sensor.since_last_boot_templated
-    - device_tracker.impressora
-    - device_tracker.camera_gabi
-    - device_tracker.camera_garagem
-    - device_tracker.camera_lavanderia
-    - device_tracker.chromecast
-    - device_tracker.garagem
-    - device_tracker.asus_pc
-    - device_tracker.ps3
-    - device_tracker.tablet_idea
+    - binary_sensor.tv_sala
+    - binary_sensor.chromecast
+    - binary_sensor.ps3
+    - binary_sensor.impressora
+    - binary_sensor.camera_gabi
+    - binary_sensor.camera_garagem
+    - binary_sensor.camera_lavanderia
+    - binary_sensor.asus_pc
+    - binary_sensor.tablet_idea
 audio_e_video:
   name: Áudio e Vídeo
   view: yes
@@ -103,4 +106,3 @@ outros:
   view: yes
   entities:
     - group.dispositivos
-    - sensor.alexandre

@@ -70,6 +70,7 @@ dani:
   track: true
   vendor: Apple, Inc.
 
+
 ps3:
   hide_if_away: false
   icon:
@@ -106,6 +107,7 @@ luana:
   track: true
   vendor: Apple, Inc.
 
+
 pedro:
   hide_if_away: false
   icon:
@@ -114,6 +116,7 @@ pedro:
   picture:
   track: true
   vendor: Motorola Mobility LLC, a Lenovo Company
+
 
 impressora:
   hide_if_away: false
@@ -150,3 +153,30 @@ tablet_idea:
   picture: /local/images/alexandre.jpg
   track: true
   vendor:
+
+chicao:
+  hide_if_away: false
+  icon:
+  mac: 48:49:C7:1B:83:28
+  name: Chicão
+  picture:
+  track: true
+  vendor: Samsung Electronics Co.,Ltd
+
+tv_sala:
+  hide_if_away: false
+  icon:
+  mac: E4:7C:F9:85:62:3C
+  name: TV Sala
+  picture:
+  track: true
+  vendor: Samsung Electronics Co.,Ltd
+
+laura:
+  hide_if_away: false
+  icon:
+  mac: 30:CB:F8:3E:81:35
+  name: Laura
+  picture:
+  track: true
+  vendor: Samsung Electronics Co.,Ltd

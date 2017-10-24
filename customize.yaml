@@ -3,7 +3,7 @@ sensor.yr_humidity:
 sensor.yr_temperature:
   friendly_name: Temperatura
 sensor.bateria_alexandre:
-  icon: mdi:cellphone
+  icon: mdi:battery-50
 sensor.unitec_semicondutores:
   icon: mdi:car
 sensor.alexandre__casa:
@@ -17,22 +17,8 @@ script.acionar_garagem:
   icon: mdi:garage
 switch.deteccao_movimento_garagem:
   icon: mdi:eye
-device_tracker.chromecast:
-  icon: mdi:cast
 media_player.prates:
   friendly_name: Chromecast
-device_tracker.camera_lavanderia:
-  icon: mdi:cctv
-device_tracker.camera_garagem:
-  icon: mdi:cctv
-device_tracker.camera_gabi:
-  icon: mdi:cctv
-device_tracker.asus_pc:
-  icon: mdi:laptop
-device_tracker.ps3:
-  icon: mdi:playstation
-device_tracker.impressora:
-  icon: mdi:printer
 sun.sun:
   hidden: true
 script.radio_start:
@@ -42,12 +28,8 @@ switch.deteccao_movimento_quarto_gabi:
 sensor.since_last_boot_templated:
   friendly_name: Uptime
   icon: mdi:clock
-sensor.alexandre:
-  entity_picture: /local/images/alexandre.jpg
 sensor.since_last_boot:
   hidden: 'true'
-device_tracker.tablet_idea:
-  icon: mdi:tablet
 script.narrar_status_casa:
   hidden: 'true'
 group.familia:
@@ -69,3 +51,46 @@ script.video_lavanderia:
   icon: mdi:camcorder-box
 switch.deteccao_movimento_lavanderia:
   icon: mdi:mdi:eye
+sensor.alexandre:
+  friendly_name: Alexandre
+  icon: mdi:mdi:pin
+media_player.un46d5500_un46d5500:
+  friendly_name: TV Sala (UN46D5500)
+binary_sensor.tv_da_sala:
+  icon: mdi:mdi:television
+binary_sensor.chromecast:
+  icon: mdi:cast
+binary_sensor.camera_lavanderia:
+  icon: mdi:cctv
+binary_sensor.camera_garagem:
+  icon: mdi:cctv
+binary_sensor.camera_gabi:
+  icon: mdi:cctv
+binary_sensor.asus_pc:
+  icon: mdi:laptop
+binary_sensor.ps3:
+  icon: mdi:playstation
+binary_sensor.impressora:
+  icon: mdi:printer
+binary_sensor.tablet_idea:
+  icon: mdi:tablet
+device_tracker.asus_pc:
+  hidden: true
+device_tracker.camera_gabi:
+  hidden: true
+device_tracker.camera_garagem:
+  hidden: true
+device_tracker.camera_lavanderia:
+  hidden: true
+device_tracker.chromecast:
+  hidden: true
+device_tracker.impressora:
+  hidden: true
+device_tracker.ps3:
+  hidden: true
+device_tracker.tv_sala:
+  hidden: true
+device_tracker.tablet_idea:
+  hidden: true
+binary_sensor.tv_sala:
+  icon: mdi:mdi:television
