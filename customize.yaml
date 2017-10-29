@@ -28,8 +28,7 @@ switch.deteccao_movimento_quarto_gabi:
 sensor.since_last_boot_templated:
   friendly_name: Uptime
   icon: mdi:clock
-sensor.since_last_boot:
-  hidden: 'true'
+sensor.since_last_boot: {}
 script.narrar_status_casa:
   hidden: 'true'
 group.familia:

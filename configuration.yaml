@@ -312,12 +312,12 @@ switch:
       value_template: '{{ value == "1" }}'
       friendly_name: Sensor de movimento
 shell_command:
-  cam01_salva_snapshot_cmd: '/home/prates/.homeassistant/shell_command/cam01_salva_snapshot.sh' 
-  cam02_salva_snapshot_cmd: '/home/prates/.homeassistant/shell_command/cam02_salva_snapshot.sh' 
-  cam03_salva_snapshot_cmd: '/home/prates/.homeassistant/shell_command/cam03_salva_snapshot.sh' 
-  cam01_salva_video_cmd: '/home/prates/.homeassistant/shell_command/cam01_salva_video.sh' 
-  cam02_salva_video_cmd: '/home/prates/.homeassistant/shell_command/cam02_salva_video.sh' 
-  cam03_salva_video_cmd: '/home/prates/.homeassistant/shell_command/cam03_salva_video.sh' 
+  cam01_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam01_salva_snapshot.sh' 
+  cam02_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam02_salva_snapshot.sh' 
+  cam03_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_snapshot.sh' 
+  cam01_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam01_salva_video.sh' 
+  cam02_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam02_salva_video.sh' 
+  cam03_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_video.sh' 
 # Seletor das radios
 # Necessário associar cada rádio no script
 # Necessário listar cada radio no API.AI

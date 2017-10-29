@@ -106,7 +106,7 @@
   - service: script.radio_start
 - id: "desliga_alarme_quando_em_casa"
   alias: Desliga Alarme
-  trigger
+  trigger:
     platform: state
     entity_id:
       - device_tracker.alexandre

@@ -69,3 +69,27 @@ ListenToRadio:
             Desligado
           {%- endif -%}
     - service: script.radio_start
+FanOnOff:
+  speech:
+    text: I will turn {{ OnOff }} the fan at Gabriela's room
+  action:
+    - service_template: >
+        {%- if OnOff == "on" -%}
+          switch.turn_on
+        {%- else -%}
+          switch.turn_off
+        {%- endif -%}
+      data_template:
+        entity_id: switch.tomada_quarto_gabi
+SamsungTv:
+  speech:
+    text: I will turn {{ OnOff }} the television at living room
+  action:
+    - service_template: >
+        {%- if OnOff == "on" -%}
+          media_player.turn_on
+        {%- else -%}
+          media_player.turn_off
+        {%- endif -%}
+      data_template:
+        entity_id: media_player.un46d5500_un46d5500
