@@ -1,3 +1,30 @@
+Welcome:
+  speech:
+    text: >
+      {%- if is_state('device_tracker.alexandre', 'home') and is_state('device_tracker.najla', 'home') -%}
+        Hello! All the family is at home now!
+      {%- else -%}
+        Hello! Alexandre is at {{ states("sensor.alexandre") }}
+        and Najla is at {{ states("device_tracker.najla") }}
+      {% endif %}
+
+      Temperature is {{ states('sensor.yr_temperature') | round(0) }} degrees, with {{ states('sensor.yr_humidity') | round(0) }}% humidity.
+
+      {%- for entity_id in states.group.dispositivos.attributes.entity_id -%}
+        {% set parts = entity_id.split('.') -%}
+        {%- if states(entity_id) == 'on' %}
+          {%- if loop.first %} {% elif loop.last %} and {% else %}, {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
+      {%- endfor %} are turned on.
+
+      {%- if is_state('group.visitantes', 'home') -%}
+        {%- for entity_id in states.group.visitantes.attributes.entity_id -%}
+          {% set parts = entity_id.split('.') -%}
+          {%- if states(entity_id) == 'home' %}
+            {%- if loop.first %} {% elif loop.last %} and {% else %}, {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
+        {%- endfor %}, welcome to our home.
+      {%- else -%}
+        There is no guests at this moment.
+      {% endif %}
 Temperature:
   speech:
     text: Temperature at home is {{ states('sensor.yr_temperature') | round(0) }} degrees

@@ -23,7 +23,7 @@ config:
 
 # Logger para warnings no diretorio .homeassistant
 logger:
-#  default: warning
+  default: warning
   logs:
     #Oculta logs de erro da camera (erro na biblioteca)
     requests.packages.urllib3: critical
