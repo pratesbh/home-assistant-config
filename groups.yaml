@@ -43,6 +43,9 @@ visitantes:
     - device_tracker.laura
     - device_tracker.pedro
     - device_tracker.danielle
+    - device_tracker.renatim
+    - device_tracker.carol
+    - device_tracker.grazziano
 radio:
   name: Rádio FM
   entities:
@@ -80,17 +83,14 @@ audio_e_video:
     - media_player.prates
     - media_player.orange_pi
     - media_player.plex_web_chrome
+    - media_player.un46d5500_un46d5500
 transito:
   name: Trânsito
   entities:
+    - sensor.alexandre
     - sensor.unitec_semicondutores
     - sensor.alexandre__casa
     - sensor.hospital_militar
-test:
-  name: Test
-  entities:
-    - sensor.alexandre
-    - device_tracker.0023141914
 peassoa_e_seguranca:
   name: Pessoas e Segurança
   view: yes

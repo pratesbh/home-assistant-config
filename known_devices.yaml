@@ -180,3 +180,30 @@ laura:
   picture:
   track: true
   vendor: Samsung Electronics Co.,Ltd
+
+carol:
+  hide_if_away: false
+  icon:
+  mac: F0:D7:AA:B5:94:22
+  name: Carol
+  picture:
+  track: true
+  vendor: Motorola Mobility LLC, a Lenovo Company
+
+renatim:
+  hide_if_away: false
+  icon:
+  mac: F0:D7:AA:B6:E6:20
+  name: Renatim
+  picture:
+  track: true
+  vendor: Motorola Mobility LLC, a Lenovo Company
+
+grazziano:
+  hide_if_away: false
+  icon:
+  mac: 08:8C:2C:2C:33:77
+  name: Grazziano
+  picture:
+  track: true
+  vendor: Samsung Electronics Co.,Ltd

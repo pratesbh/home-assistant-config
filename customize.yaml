@@ -52,8 +52,8 @@ script.video_lavanderia:
 switch.deteccao_movimento_lavanderia:
   icon: mdi:mdi:eye
 sensor.alexandre:
+  entity_picture: local/images/alexandre.jpg
   friendly_name: Alexandre
-  icon: mdi:mdi:pin
 media_player.un46d5500_un46d5500:
   friendly_name: TV Sala (UN46D5500)
 binary_sensor.tv_da_sala:
@@ -94,3 +94,5 @@ device_tracker.tablet_idea:
   hidden: true
 binary_sensor.tv_sala:
   icon: mdi:mdi:television
+device_tracker.0023141914:
+  hidden: 'true'

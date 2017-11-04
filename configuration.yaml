@@ -8,10 +8,11 @@ homeassistant:
   # Selecione timezone aqui: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Sao_Paulo
   customize: !include customize.yaml
-  #Oculta sensores IGD (agregados pelo UPNP)
+
   customize_glob:
-    "sensor.igd_*":
-      hidden: true
+  #Oculta sensores IGD (agregados pelo UPNP)
+#    "sensor.igd_*":
+#      hidden: true
     "automation.*":
       hidden: true
 
@@ -21,7 +22,7 @@ frontend:
 # Enables configuration UI
 config:
 
-# Logger para warnings no diretorio .homeassistant
+# Log de falhas no diretorio .homeassistant
 logger:
   default: warning
   logs:
@@ -39,7 +40,7 @@ http:
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 #  base_url: http://blablabla.duckdns.net:8123
 
-upnp:
+#upnp:
 
 # Procura por atualizações do sistema
 updater:
@@ -48,7 +49,7 @@ updater:
 discovery:
 
 # Comandos por voz na interface web
-conversation:
+#conversation:
 
 # Salva dados em banco de dados SQLite
 recorder:
@@ -139,12 +140,22 @@ sensor:
   - platform: template
     sensors:
       alexandre:
-        value_template: "{{ states.sensor.alexandre__casa.attributes.origin_addresses[0][0:states.sensor.alexandre__casa.attributes.origin_addresses[0]|length-13] }}"
+        value_template: >-
+          {%- if is_state("device_tracker.alexandre", "not_home") -%}
+            {{ states.sensor.alexandre__casa.attributes.origin_addresses[0][0:states.sensor.alexandre__casa.attributes.origin_addresses[0]|length-13] }}
+          {%- else -%}
+            {{ states("device_tracker.alexandre") }}
+          {%- endif -%}
   - platform: template
     sensors:
       bateria_alexandre:
         friendly_name: "Celular Alexandre"
-        value_template: "{{ states.device_tracker['0023141914'].attributes.battery|round }}"
+        value_template: >-
+          {%- if is_state("device_tracker.0023141914", "unknown") -%}
+            0
+          {%- else -%}
+            {{ states.device_tracker['0023141914'].attributes.battery|round }}
+          {%- endif -%}
         unit_of_measurement: '%'
       
 # Converte o uptime para facilitar leitura
@@ -265,8 +276,6 @@ device_tracker:
 media_player:
   - platform: vlc
     name: Orange Pi
-  - platform: cast
-    name: Chromecast
 
 # Mosquitto broker
 #mqtt:

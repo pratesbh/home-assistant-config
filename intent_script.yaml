@@ -1,33 +1,35 @@
 Welcome:
   speech:
     text: >
+      {{"Hi! Let's take a look at your home, family, guests and devices? "}}  
       {%- if is_state('device_tracker.alexandre', 'home') and is_state('device_tracker.najla', 'home') -%}
-        Hello! All the family is at home now!
+        {{"It seems the whole family is at home right now. "}}
       {%- else -%}
-        Hello! Alexandre is at {{ states("sensor.alexandre") }}
-        and Najla is at {{ states("device_tracker.najla") }}
-      {% endif %}
-
-      Temperature is {{ states('sensor.yr_temperature') | round(0) }} degrees, with {{ states('sensor.yr_humidity') | round(0) }}% humidity.
-
-      {%- for entity_id in states.group.dispositivos.attributes.entity_id -%}
-        {% set parts = entity_id.split('.') -%}
-        {%- if states(entity_id) == 'on' %}
-          {%- if loop.first %} {% elif loop.last %} and {% else %}, {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
-      {%- endfor %} are turned on.
-
+        {{"Alexandre is at "}}{{ states("sensor.alexandre") }}{{", and Najla is "}}
+        {%- if is_state('device_tracker.najla', 'not_home') -%}
+          {{"not at home. "}}  
+        {%- else -%}
+          {"at "}}{{ states("device_tracker.najla") }}.  
+        {%- endif -%}
+      {%- endif -%}
       {%- if is_state('group.visitantes', 'home') -%}
         {%- for entity_id in states.group.visitantes.attributes.entity_id -%}
           {% set parts = entity_id.split('.') -%}
           {%- if states(entity_id) == 'home' %}
             {%- if loop.first %} {% elif loop.last %} and {% else %}, {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
-        {%- endfor %}, welcome to our home.
+        {%- endfor %}{{", welcome to our home. "}} 
       {%- else -%}
-        There is no guests at this moment.
-      {% endif %}
+        {{"There are no guests in the house. "}} 
+      {%- endif -%}
+      {{"Temperature is "}}{{ states('sensor.yr_temperature') | round(0) }}{{" degrees, with air humidity about "}}{{ states('sensor.yr_humidity') | round(0) }}{{"%. "}} 
+      {%- for entity_id in states.group.dispositivos.attributes.entity_id -%}
+        {% set parts = entity_id.split('.') -%}
+        {%- if states(entity_id) == 'on' -%}
+          {{ states[parts[0]][parts[1]].name }}{{", "}}{%- endif -%}
+      {% endfor -%}{{"are turned on. That's it! May I help you to turn off the tv, open the garage door, or do anything else?"}}
 Temperature:
   speech:
-    text: Temperature at home is {{ states('sensor.yr_temperature') | round(0) }} degrees
+    text: The temperature at home is {{ states('sensor.yr_temperature') | round(0) }} degrees
 LocateIntent:
   speech:
     text: >
@@ -43,7 +45,7 @@ LocateIntent:
 WhereAreWeIntent:
   speech:
     text: >
-      {%- if is_state('device_tracker.0023141914', 'home') and
+      {%- if is_state('device_tracker.alexandre', 'home') and
              is_state('device_tracker.najla', 'home') -%}
         Everybody is at home, you fool
       {%- else -%}

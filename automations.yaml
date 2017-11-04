@@ -1,5 +1,5 @@
 - id: 'notif_visitantes'
-  alias: 'Notifica sobre visitantes'
+  alias: 'Notifica visitantes em casa'
   trigger:
     platform: state
     entity_id:
@@ -20,6 +20,36 @@
     data:
       data:
         vibrate: [200,100,200,100,200]
+- id: 'notif_familia'
+  alias: 'Notifica família em casa'
+  trigger:
+    platform: state
+    entity_id:
+      - device_tracker.alexandre
+      - device_tracker.najla
+    to: 'home'
+  action:
+  - delay:
+      seconds: 10
+  - service: notify.chrome_notifier
+    data_template:
+      title: "Família"
+      message: "{{ trigger.to_state.attributes.friendly_name }} está em casa."
+    data:
+      data:
+        vibrate: [200,100,200,100,200]
+        actions:
+        - action: botao_acionar_garage
+          title: "Acionar Garagem"
+- id: "abre_garagem_via_botao_em_notificacao"
+  alias: "Acionar garagem via botão em notificação"
+  trigger:
+    platform: event
+    event_type: html5_notification.clicked
+    event_data:
+      action: botao_acionar_garage
+  action:
+  - service: script.acionar_garagem
 - id: "notif_movimento_cameras"
   alias: "Notificações de movimento"
   trigger:
@@ -132,46 +162,6 @@
   - data:
       entity_id: switch.deteccao_movimento_quarto_gabi
     service: switch.turn_on
-- id: "notif_najla_em_casa"
-  alias: Notifica que Najla chegou
-  trigger:
-    platform: state
-    entity_id: device_tracker.najla
-    to: 'home'
-  action:
-  - service: notify.chrome_notifier
-    data:
-      title: "Família"
-      message: "Najla chegou em casa"
-      data:
-        tag: notification-about-home-presence
-        vibrate: [200,100,200,100,600]
-- id: "notif_alexandre_em_casa"
-  alias: "Avisa que cheguei em casa"
-  trigger:
-    platform: zone
-    event: enter
-    zone: zone.home
-    entity_id: device_tracker.alexandre
-  action:
-  - service: notify.chrome_notifier
-    data:
-      title: "Família"
-      message: "Bem-vindo!"
-      data:
-        vibrate: [200,100,200,100,600]
-        actions:
-        - action: botao_acionar_garage
-          title: "Acionar Garagem"
-- id: "acionar_garagem_por_bota_no_push_notif"
-  alias: "Acionar garagem via botão em notificação"
-  trigger:
-    platform: event
-    event_type: html5_notification.clicked
-    event_data:
-      action: botao_acionar_garage
-  action:
-  - service: script.acionar_garagem
 - id: "gravar_video_mov_garagem"
   alias: "Gravar video por presença na garagem"
   trigger:
