@@ -370,7 +370,7 @@ ifttt:
   key: !secret ifttt_key
 
 # Comandos de voz do Api.ai e Actions on Google
-apiai:
+dialogflow:
 
 #Notificações no celular ou computador (android / chrome apenas)
 notify:
