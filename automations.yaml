@@ -38,9 +38,9 @@
     data:
       data:
         vibrate: [200,100,200,100,200]
-        actions:
-        - action: botao_acionar_garage
-          title: "Acionar Garagem"
+#        actions:
+#        - action: botao_acionar_garage
+#          title: "Acionar Garagem"
 - id: "abre_garagem_via_botao_em_notificacao"
   alias: "Acionar garagem via botão em notificação"
   trigger:

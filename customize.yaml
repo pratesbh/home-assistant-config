@@ -96,3 +96,8 @@ binary_sensor.tv_sala:
   icon: mdi:mdi:television
 device_tracker.0023141914:
   hidden: 'true'
+weblink.deluge:
+  friendly_name: Deluge
+  icon: mdi:mdi:download-network
+weblink.plex:
+  icon: mdi:mdi:plex

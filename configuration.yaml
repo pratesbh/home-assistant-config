@@ -33,8 +33,9 @@ logger:
 http:
   # Senha do home assistant
   api_password: !secret password01
-  ssl_certificate: !secret ssl_certificate
-  ssl_key: !secret ssl_key
+#  ssl_certificate: !secret ssl_certificate
+#  ssl_key: !secret ssl_key
+#  use_x_forwarded_for: True
   ip_ban_enabled: True
   login_attempts_threshold: 5
 
@@ -75,10 +76,12 @@ history:
       - input_number
       - camera
       - switch
+      - weblink
     entities:
       - sensor.ram_use
       - sensor.cpu_use
       - sensor.disk_use_mntssd
+      - sensor.alexandre
 
 # Habilita logbook
 logbook:
@@ -142,10 +145,10 @@ sensor:
     sensors:
       alexandre:
         value_template: >-
-          {%- if is_state("device_tracker.alexandre", "not_home") -%}
+          {%- if is_state("device_tracker.0023141914", "not_home") -%}
             {{ states.sensor.alexandre__casa.attributes.origin_addresses[0][0:states.sensor.alexandre__casa.attributes.origin_addresses[0]|length-13] }}
           {%- else -%}
-            {{ states("device_tracker.alexandre") }}
+            {{ states("device_tracker.0023141914") }}
           {%- endif -%}
   - platform: template
     sensors:
@@ -158,8 +161,7 @@ sensor:
             {{ states.device_tracker['0023141914'].attributes.battery }}
           {%- endif -%}
         unit_of_measurement: '%'
-      
-# Converte o uptime para facilitar leitura
+   # Converte o uptime para facilitar leitura
   - platform: template
     sensors:
       since_last_boot_templated:
@@ -183,6 +185,8 @@ sensor:
               {{ hours }} hours
             {%- endif -%}
           {%- endif -%}
+  - platform: plex
+  
 # Polling das cameras para notificar sobre movimento
 binary_sensor:
   - platform: template
@@ -238,7 +242,7 @@ binary_sensor:
     payload_on: 1
     payload_off: 0
     device_class: motion
-    scan_interval: 15
+    scan_interval: 60
 
 # Camera da garagem
 camera:
@@ -314,12 +318,12 @@ switch:
       command_state: !secret cam02_motion_detect_state
       value_template: '{{ value == "1" }}'
       friendly_name: Sensor de movimento
-    deteccao_movimento_lavanderia:
-      command_on: !secret cam03_motion_detect_on 
-      command_off: !secret cam03_motion_detect_off 
-      command_state: !secret cam03_motion_detect_state
-      value_template: '{{ value == "1" }}'
-      friendly_name: Sensor de movimento
+#    deteccao_movimento_lavanderia:
+#      command_on: !secret cam03_motion_detect_on 
+#      command_off: !secret cam03_motion_detect_off 
+#     command_state: !secret cam03_motion_detect_state
+#      value_template: '{{ value == "1" }}'
+#      friendly_name: Sensor de movimento
 shell_command:
   cam01_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam01_salva_snapshot.sh' 
   cam02_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam02_salva_snapshot.sh' 
@@ -329,7 +333,7 @@ shell_command:
   cam03_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_video.sh' 
 # Seletor das radios
 # Necessário associar cada rádio no script
-# Necessário listar cada radio no API.AI
+# Necessário listar cada radio no Dialogflow
 input_select:
   radio_station:
     name: 'Estação:'
@@ -364,6 +368,7 @@ input_number:
     min: 0
     max: 1
     step: 0.05
+    
 
 #IFTTT
 ifttt:
