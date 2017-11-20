@@ -19,15 +19,15 @@ quarto_gabi:
     - script.snapshot_quarto_gabi
     - script.video_quarto_gabi
     - camera.quarto_gabi
-lavanderia:
-  name: Lavanderia
-  control: hidden
-  entities:
-    - switch.deteccao_movimento_lavanderia
-    - binary_sensor.movimento_lavanderia
-    - script.snapshot_lavanderia
-    - script.video_lavanderia
-    - camera.lavanderia
+#lavanderia:
+#  name: Lavanderia
+#  control: hidden
+#  entities:
+#    - switch.deteccao_movimento_lavanderia
+#    - binary_sensor.movimento_lavanderia
+#    - script.snapshot_lavanderia
+ #   - script.video_lavanderia
+ #   - camera.lavanderia
     
 familia:
   name: Família
@@ -100,7 +100,7 @@ peassoa_e_seguranca:
     - group.visitantes
     - group.garagem
     - group.quarto_gabi
-    - group.lavanderia
+#    - group.lavanderia
 outros:
   name: Outros
   view: yes

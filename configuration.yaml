@@ -24,11 +24,11 @@ config:
 
 # Log de falhas no diretorio .homeassistant
 logger:
-  default: warning
-  logs:
+#  default: warning
+#  logs:
     #Oculta logs de erro da camera (erro na biblioteca)
-    requests.packages.urllib3: critical
-    urllib3.connectionpool: critical
+#    requests.packages.urllib3: critical
+#    urllib3.connectionpool: critical
 
 http:
   # Senha do home assistant
@@ -49,6 +49,8 @@ updater:
 
 # Descobre novos dispositivos
 discovery:
+  ignore:
+    - plex_mediaserver
 
 # Comandos por voz na interface web
 #conversation:
@@ -88,6 +90,7 @@ logbook:
   exclude:
     domains:
     - automation
+    - group
 
 # Monitora o sol - que pode ser usado em automações
 sun:
@@ -185,9 +188,7 @@ sensor:
               {{ hours }} hours
             {%- endif -%}
           {%- endif -%}
-  - platform: plex
   
-# Polling das cameras para notificar sobre movimento
 binary_sensor:
   - platform: template
     sensors:
@@ -218,7 +219,7 @@ binary_sensor:
       tablet_idea:
         value_template: "{{ is_state('device_tracker.tablet_idea', 'home') }}"
         friendly_name: Tablet Idea
-    
+  # Polling das cameras para notificar sobre movimento  
   - platform: command_line
     name: Movimento Garagem
     friendly_name: Movimento
@@ -235,14 +236,14 @@ binary_sensor:
     payload_off: 0
     device_class: motion
     scan_interval: 15
-  - platform: command_line
-    name: Movimento Lavanderia
-    friendly_name: Movimento
-    command: !secret cam03_movimento 
-    payload_on: 1
-    payload_off: 0
-    device_class: motion
-    scan_interval: 60
+#  - platform: command_line
+#    name: Movimento Lavanderia
+#    friendly_name: Movimento
+#    command: !secret cam03_movimento 
+#    payload_on: 1
+#    payload_off: 0
+#    device_class: motion
+#    scan_interval: 60
 
 # Camera da garagem
 camera:
@@ -259,9 +260,9 @@ camera:
     password: !secret password01
     name: Quarto Gabi
 # Camera nao permite autenticação como as demais
-  - platform: mjpeg
-    mjpeg_url: !secret cam03_video 
-    name: Lavanderia
+#  - platform: mjpeg
+#    mjpeg_url: !secret cam03_video 
+#    name: Lavanderia
 
 # Rastreamento de dispositivos (e pessoas)
 #Lembre-se de sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip /usr/bin/nmap
@@ -330,7 +331,7 @@ shell_command:
   cam03_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_snapshot.sh' 
   cam01_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam01_salva_video.sh' 
   cam02_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam02_salva_video.sh' 
-  cam03_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_video.sh' 
+#  cam03_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_video.sh' 
 # Seletor das radios
 # Necessário associar cada rádio no script
 # Necessário listar cada radio no Dialogflow
