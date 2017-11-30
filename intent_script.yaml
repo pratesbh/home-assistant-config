@@ -122,3 +122,127 @@ SamsungTv:
         {%- endif -%}
       data_template:
         entity_id: media_player.un46d5500_un46d5500
+BemVindo:
+  speech:
+    text: >
+      {{"Olá! Vamos dar uma olhada em sua casa, família, visitantes e dispositivos? "}}  
+      {%- if is_state('device_tracker.alexandre', 'home') and is_state('device_tracker.najla', 'home') -%}
+        {{"Aparentemente toda a família está em casa agora. "}}
+      {%- else -%}
+        {{"Alexandre está em "}}{{ states("sensor.alexandre") }}{{", e Najla "}}
+        {%- if is_state('device_tracker.najla', 'not_home') -%}
+          {{"está fora. "}}  
+        {%- else -%}
+          {"em "}}{{ states("device_tracker.najla") }}.  
+        {%- endif -%}
+      {%- endif -%}
+      {%- if is_state('group.visitantes', 'home') -%}
+        {%- for entity_id in states.group.visitantes.attributes.entity_id -%}
+          {% set parts = entity_id.split('.') -%}
+          {%- if states(entity_id) == 'home' %}
+            {%- if loop.first %} {% elif loop.last %} and {% else %}, {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
+        {%- endfor %}{{", bem-vindo a nossa casa. "}} 
+      {%- else -%}
+        {{"Não temos visitantes nesse momento. "}} 
+      {%- endif -%}
+      {{"A temperatura é de "}}{{ states('sensor.yr_temperature') | round(0) }}{{" graus, e a umidade relativa é aproximadamente "}}{{ states('sensor.yr_humidity') | round(0) }}{{"%. "}} 
+      {%- for entity_id in states.group.dispositivos.attributes.entity_id -%}
+        {% set parts = entity_id.split('.') -%}
+        {%- if states(entity_id) == 'on' -%}
+          {{ states[parts[0]][parts[1]].name }}{{", "}}{%- endif -%}
+      {% endfor -%}{{"estão ligados. Isso é tudo! Gostaria de desligar a TV, abrir a garagem, ou fazer qualquer outra coisa?"}}
+Temperatura:
+  speech:
+    text: A temperatura em casa é de {{ states('sensor.yr_temperature') | round(0) }} graus
+Localizar:
+  speech:
+    text: >
+      {%- for state in states.device_tracker -%}
+        {%- if state.name.lower() == User.lower() -%}
+          {{ state.name }} está em {{ state.state }}
+        {%- elif loop.last -%}
+          Desculpe, não sei onde {{ User }} pode estar.
+        {%- endif -%}
+      {%- else -%}
+        Não há sistemas de geolocalização ativos.
+      {%- endfor -%}
+OndeEstao:
+  speech:
+    text: >
+      {%- if is_state('device_tracker.alexandre', 'home') and
+             is_state('device_tracker.najla', 'home') -%}
+        Toda a família está em casa agora.
+      {%- else -%}
+        Alexandre está em {{ states("sensor.alexandre") }}
+        e Najla em {{ states("device_tracker.najla") }}
+      {% endif %}
+AlarmeMovimento:
+  speech:
+    text: Eu vou {{ OnOff }} a detecção de movimentos em {{ Room }}
+  action:
+    - service: persistent_notification.create
+      data_template:
+        message: Alguém solicitou {{ OnOff }} o alarme em {{ Room }}
+    - service_template: >
+        {%- if OnOff == "ligar" -%}
+          switch.turn_on
+        {%- else -%}
+          switch.turn_off
+        {%- endif -%}
+      data_template:
+        entity_id: "switch.deteccao_movimento_{{ Room | replace(' ', '_') }}"
+AtivarPortaoGaragem:
+  speech:
+    text: Ativando o portão da garagem. Certifique-se que o Jeep Compass ou a Gabriela não serão esmagados pelo portão, sua mula!
+  action:
+    - service: persistent_notification.create
+      data_template:
+        message: Portão da garagem acionado pelo Google Assistant.
+    - service: script.acionar_garagem
+OuvirRadio:
+  speech:
+    text: >
+      {%- if OnOff == "ligar" -%}
+        Você está ouvindo a rádio {{ RadioStation }}
+      {%- else -%}
+         Desligando o rádio
+      {%- endif -%}
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.chromecast_radio
+        option: OrangePi
+    - service: input_select.select_option
+      data_template:
+        entity_id: input_select.radio_station
+        option: >
+          {%- if OnOff == "ligar" -%}
+            {{ RadioStation }}
+          {%- else -%}
+            Desligado
+          {%- endif -%}
+    - service: script.radio_start
+Ventilador:
+  speech:
+    text: Eu vou {{ OnOff }} o ventilador no quarto da Gabi.
+  action:
+    - service_template: >
+        {%- if OnOff == "ligar" -%}
+          switch.turn_on
+        {%- else -%}
+          switch.turn_off
+        {%- endif -%}
+      data_template:
+        entity_id: switch.tomada_quarto_gabi
+TvSala:
+  speech:
+    text: Eu vou {{ OnOff }} a televisão da sala.
+  action:
+    - service_template: >
+        {%- if OnOff == "ligar" -%}
+          media_player.turn_on
+        {%- else -%}
+          media_player.turn_off
+        {%- endif -%}
+      data_template:
+        entity_id: media_player.un46d5500_un46d5500

@@ -236,14 +236,14 @@ binary_sensor:
     payload_off: 0
     device_class: motion
     scan_interval: 15
-#  - platform: command_line
-#    name: Movimento Lavanderia
-#    friendly_name: Movimento
-#    command: !secret cam03_movimento 
-#    payload_on: 1
-#    payload_off: 0
-#    device_class: motion
-#    scan_interval: 60
+  - platform: command_line
+    name: Movimento Lavanderia
+    friendly_name: Movimento
+    command: !secret cam03_movimento 
+    payload_on: 1
+    payload_off: 0
+    device_class: motion
+    scan_interval: 60
 
 # Camera da garagem
 camera:
@@ -260,11 +260,14 @@ camera:
     password: !secret password01
     name: Quarto Gabi
 # Camera nao permite autenticação como as demais
-#  - platform: mjpeg
-#    mjpeg_url: !secret cam03_video 
-#    name: Lavanderia
-
-# Rastreamento de dispositivos (e pessoas)
+  - platform: mjpeg
+    mjpeg_url: !secret cam03_video 
+    name: Lavanderia
+  - platform: generic
+    still_image_url: http://infotrafego.pbh.gov.br/rlt/images/camara06.jpg
+    name: Praça Sete
+    
+    # Rastreamento de dispositivos (e pessoas)
 #Lembre-se de sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip /usr/bin/nmap
 device_tracker:
   - platform: nmap_tracker
@@ -319,19 +322,19 @@ switch:
       command_state: !secret cam02_motion_detect_state
       value_template: '{{ value == "1" }}'
       friendly_name: Sensor de movimento
-#    deteccao_movimento_lavanderia:
-#      command_on: !secret cam03_motion_detect_on 
-#      command_off: !secret cam03_motion_detect_off 
-#     command_state: !secret cam03_motion_detect_state
-#      value_template: '{{ value == "1" }}'
-#      friendly_name: Sensor de movimento
+    deteccao_movimento_lavanderia:
+      command_on: !secret cam03_motion_detect_on 
+      command_off: !secret cam03_motion_detect_off 
+      command_state: !secret cam03_motion_detect_state
+      value_template: '{{ value == "1" }}'
+      friendly_name: Sensor de movimento
 shell_command:
   cam01_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam01_salva_snapshot.sh' 
   cam02_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam02_salva_snapshot.sh' 
   cam03_salva_snapshot_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_snapshot.sh' 
   cam01_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam01_salva_video.sh' 
   cam02_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam02_salva_video.sh' 
-#  cam03_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_video.sh' 
+  cam03_salva_video_cmd: '/home/pi/.homeassistant/shell_command/cam03_salva_video.sh' 
 # Seletor das radios
 # Necessário associar cada rádio no script
 # Necessário listar cada radio no Dialogflow
